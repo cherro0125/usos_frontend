@@ -1,7 +1,9 @@
 # USOS Frontend
 
 
-###Temat projektu: USOS ###
+Temat projektu: 
+----
+USOS 
 
 
 
