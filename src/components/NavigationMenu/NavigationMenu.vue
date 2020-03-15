@@ -9,6 +9,7 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>email@costam.pl</v-list-item-title>
+          <v-list-item-subtitle>Student</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
