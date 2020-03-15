@@ -5,8 +5,9 @@
       <v-toolbar-title>USOS</v-toolbar-title>
       <v-spacer></v-spacer>
       <DropdownMenu :dropdownMenu.sync="dropdownMenu"></DropdownMenu>
-      <v-btn>
-        <v-icon>logout</v-icon>
+      <v-btn class="ml-3">
+				<span>LogOut</span>
+        <v-icon class="ml-2">logout</v-icon>
       </v-btn>
     </v-app-bar>
     <NavigationMenu :drawer.sync="drawer"></NavigationMenu>

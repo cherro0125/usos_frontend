@@ -2,7 +2,10 @@
   <div class="text-center">
     <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
       <template v-slot:activator="{ on }">
-        <v-btn color="indigo" dark v-on="on">Settings</v-btn>
+        <v-btn color="indigo" dark v-on="on">
+            <span class="mr-2">Settings</span>
+            <v-icon>settings</v-icon>
+        </v-btn>
       </template>
 
       <v-card>
