@@ -32,7 +32,7 @@ export default {
         return this.drawer;
       },
       set() {
-          this.$emit('drawer', this.showDrawer)
+        this.$emit("update:drawer", this.showDrawer);
       }
     }
   }

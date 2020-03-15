@@ -4,9 +4,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>USOS</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>
-        <v-icon>settings</v-icon>
-      </v-btn>
+      <DropdownMenu :dropdownMenu.sync="dropdownMenu"></DropdownMenu>
       <v-btn>
         <v-icon>logout</v-icon>
       </v-btn>
@@ -17,14 +15,17 @@
 
 <script>
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
+import DropdownMenu from "../DropdownMenu/DropdownMenu"
 export default {
   data() {
     return {
-      drawer: true
+			drawer: true,
+			dropdownMenu: false
     };
   },
   components: {
-    NavigationMenu
+		NavigationMenu,
+		DropdownMenu
   }
 };
 </script>
