@@ -12,6 +12,14 @@
           <v-list-item-subtitle>Student</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item class="list-items">
+        <v-list-item-action>
+          <v-icon>grade</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>Grades</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -33,4 +41,9 @@ export default {
 </script>
 
 <style>
+
+.list-items {
+    margin-left: 0.5vw;
+}
+
 </style>
