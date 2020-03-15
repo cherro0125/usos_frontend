@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="showDrawer" app clipped>
     <v-list dense>
-      <v-list-item @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+      <v-list-item>
         <v-list-item-action>
           <v-avatar color="indigo">
             <v-icon dark>mdi-account-circle</v-icon>

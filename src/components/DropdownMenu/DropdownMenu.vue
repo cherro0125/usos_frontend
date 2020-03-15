@@ -28,15 +28,15 @@
             <v-list-item-action>
               <v-switch v-model="theme" color="purple"></v-switch>
             </v-list-item-action>
-            <v-list-item-title>Change theme</v-list-item-title>
+            <v-list-item-title>Dark theme: {{theme ? 'on' : 'off'}}</v-list-item-title>
           </v-list-item>
         </v-list>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="menu = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="menu = false">Save</v-btn>
+          <v-btn text @click="onCancel">Cancel</v-btn>
+          <v-btn color="primary" text @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -59,6 +59,21 @@ export default {
       set(newValue) {
         this.$emit("update:dropdownMenu", newValue);
       }
+    }
+  },
+  methods: {
+    onSave() {
+      this.menu = !this.menu;
+      this.$vuetify.theme.dark = this.theme;
+    },
+    onCancel() {
+      this.menu = !this.menu;
+      this.theme = this.$vuetify.theme.dark;
+    }
+  },
+  watch: {
+    menu() {
+      if (!this.menu) this.theme = this.$vuetify.theme.dark;
     }
   }
 };
