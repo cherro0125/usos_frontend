@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-data-table
+      hide-default-footer
       :dark="$vuetify.theme.dark"
       :headers="headers"
       class="elevation-1"
@@ -18,9 +19,9 @@ export default {
           align: "start",
           value: "name"
         },
-        { text: "Amount", value: "amount" },
-        { text: "Status", value: "status" },
-        { text: "Date", value: "date" },
+        { text: "Amount per month", value: "amount" },
+        { text: "From", value: "from" },
+        { text: "To", value: "to" }
       ]
     };
   }

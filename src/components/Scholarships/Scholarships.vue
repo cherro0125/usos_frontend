@@ -6,7 +6,9 @@
       <v-tab>Scholarships payments</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-tab-item></v-tab-item>
+      <v-tab-item>
+          <ScholarshipsTable></ScholarshipsTable>
+      </v-tab-item>
       <v-tab-item>
         <PaymentsTable></PaymentsTable>
       </v-tab-item>
@@ -16,6 +18,7 @@
 
 <script>
 import PaymentsTable from "./PaymentsTable/PaymentsTable";
+import ScholarshipsTable from './ScholarshipsTable/ScholarshipsTable';
 
 export default {
   data() {
@@ -24,7 +27,8 @@ export default {
     };
   },
   components: {
-    PaymentsTable
+    PaymentsTable,
+    ScholarshipsTable
   }
 };
 </script>
