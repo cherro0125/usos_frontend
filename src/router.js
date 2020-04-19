@@ -39,4 +39,6 @@ const router = new Router({
     ]
 });
 
+router.replace('/news');
+
 export default router;
