@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-data-table
-      hide-default-footer
       :dark="$vuetify.theme.dark"
       :headers="headers"
       class="elevation-1"
@@ -15,12 +14,12 @@ export default {
     return {
       headers: [
         {
-          text: "Subject",
+          text: "Type",
           align: "start",
           value: "name"
         },
-        { text: "Mark", value: "mark" },
-        { text: "Ects", value: "ects" },
+        { text: "Amount", value: "amount" },
+        { text: "Date", value: "date" },
       ]
     };
   }
