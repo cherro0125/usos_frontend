@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <h2 class="pl-10">Grades</h2>
     <GradesTable></GradesTable>
   </v-container>
 </template>
