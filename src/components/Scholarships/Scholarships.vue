@@ -8,14 +8,14 @@
     <v-tabs-items v-model="tab">
       <v-tab-item></v-tab-item>
       <v-tab-item>
-        <ScholarshipTable></ScholarshipTable>
+        <PaymentsTable></PaymentsTable>
       </v-tab-item>
     </v-tabs-items>
   </v-container>
 </template>
 
 <script>
-import ScholarshipTable from "./ScholarshipsTable/ScholarshipsTable";
+import PaymentsTable from "./PaymentsTable/PaymentsTable";
 
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
     };
   },
   components: {
-    ScholarshipTable
+    PaymentsTable
   }
 };
 </script>
