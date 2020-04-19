@@ -36,11 +36,6 @@ export default {
         this.$emit("update:drawer", this.showDrawer);
       }
     }
-  },
-  methods: {
-    test() {
-      console.log("test")
-    }
   }
 };
 </script>
