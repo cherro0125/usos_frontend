@@ -5,12 +5,17 @@ import Login from './components/Login/Login';
 import Scholarships from './components/Scholarships/Scholarships';
 import Payments from "./components/Payments/Payments";
 import Applications from "./components/Applications/Applications";
+import News from "./components/News/News";
 
 Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
     routes: [
+        {
+            path: '/news',
+            component: News
+        },
         {
             path: '/login',
             component: Login
