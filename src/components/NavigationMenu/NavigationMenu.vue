@@ -31,6 +31,11 @@ export default {
     return {
       items: [
         {
+          title: "news",
+          icon: "announcement",
+          route: "/news"
+        },
+        {
           title: "grades",
           icon: "grade",
           route: "/grades"
