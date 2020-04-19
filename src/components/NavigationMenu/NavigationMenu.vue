@@ -12,7 +12,7 @@
           <v-list-item-subtitle>Student</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item class="list-items">
+      <v-list-item class="list-items" link to="/grades">
         <v-list-item-action>
           <v-icon>grade</v-icon>
         </v-list-item-action>
@@ -35,6 +35,11 @@ export default {
       set() {
         this.$emit("update:drawer", this.showDrawer);
       }
+    }
+  },
+  methods: {
+    test() {
+      console.log("test")
     }
   }
 };
