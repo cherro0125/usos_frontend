@@ -45,6 +45,11 @@ export default {
           icon: "attach_money",
           route: "/payments"
         },
+        {
+          title: "applications",
+          icon: "description",
+          route: "/applications"
+        },
       ]
     };
   },
