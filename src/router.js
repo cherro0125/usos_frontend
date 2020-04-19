@@ -4,6 +4,7 @@ import Grades from './components/Grades/Grades';
 import Login from './components/Login/Login';
 import Scholarships from './components/Scholarships/Scholarships';
 import Payments from "./components/Payments/Payments";
+import Applications from "./components/Applications/Applications";
 
 Vue.use(Router);
 
@@ -25,6 +26,10 @@ const router = new Router({
         {
             path: '/payments',
             component: Payments
+        },
+        {
+            path: '/applications',
+            component: Applications
         },
     ]
 });
