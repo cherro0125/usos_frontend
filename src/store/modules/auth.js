@@ -13,6 +13,9 @@ const mutations = {
 const actions = {
     login({ commit }, credentials) {
         commit('setLoggedIn', true);
+    },
+    logout({commit}) {
+        commit('setLoggedIn', false);
     }
 };
 
