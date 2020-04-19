@@ -12,12 +12,12 @@
           <v-list-item-subtitle>Student</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item class="list-items" link to="/grades">
+      <v-list-item class="list-items" v-for="item in items" :key="item.title" link :to="item.route">
         <v-list-item-action>
-          <v-icon>grade</v-icon>
+          <v-icon>{{item.icon}}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>Grades</v-list-item-title>
+          <v-list-item-title>{{item.title}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -27,6 +27,22 @@
 <script>
 export default {
   props: ["drawer"],
+  data() {
+    return {
+      items: [
+        {
+          title: "grades",
+          icon: "grade",
+          route: "/grades"
+        },
+        {
+          title: "scholarships",
+          icon: "school",
+          route: "/scholarships"
+        }
+      ]
+    };
+  },
   computed: {
     showDrawer: {
       get() {
@@ -41,9 +57,7 @@ export default {
 </script>
 
 <style>
-
 .list-items {
-    margin-left: 0.5vw;
+  margin-left: 0.5vw;
 }
-
 </style>
