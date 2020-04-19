@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="8">
-          <v-form @submit.prevent="login()">
+          <v-form @submit.prevent="signin()">
             <v-card class="signin-card pa-8">
               <v-card-title class="justify-center signin-card-title">
                 <h2>Log in</h2>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -44,8 +45,10 @@ export default {
     };
   },
   methods: {
-    login() {
-
+    ...mapActions(["login"]),
+    signin() {
+      this.login(this.credentials);
+      this.$router.push('/news');
     }
   }
 };

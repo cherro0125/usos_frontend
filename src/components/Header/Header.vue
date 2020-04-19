@@ -1,22 +1,31 @@
 <template>
   <v-container>
     <v-app-bar app clipped-left :dark="$vuetify.theme.dark">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon  v-if="isLoggedIn" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>USOS</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <DropdownMenu :dropdownMenu.sync="dropdownMenu"></DropdownMenu>
-      <v-btn class="ml-3">
-        <span>LogOut</span>
-        <v-icon class="ml-2">logout</v-icon>
-      </v-btn>
+      <v-row v-if="isLoggedIn" align="end" justify="end">
+        <DropdownMenu :dropdownMenu.sync="dropdownMenu"></DropdownMenu>
+        <v-btn class="ml-3">
+          <span>LogOut</span>
+          <v-icon class="ml-2">logout</v-icon>
+        </v-btn>
+      </v-row>
+      <v-row v-else justify="end">
+        <v-btn class="ml-3" to="/login">
+          <span>Login</span>
+          <v-icon class="ml-2">input</v-icon>
+        </v-btn>
+      </v-row>
     </v-app-bar>
-    <NavigationMenu :drawer.sync="drawer"></NavigationMenu>
+    <NavigationMenu v-if="isLoggedIn" :drawer.sync="drawer"></NavigationMenu>
   </v-container>
 </template>
 
 <script>
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -27,7 +36,8 @@ export default {
   components: {
     NavigationMenu,
     DropdownMenu
-  }
+  },
+  computed: mapGetters(["isLoggedIn"])
 };
 </script>
 
