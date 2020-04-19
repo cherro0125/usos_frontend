@@ -39,7 +39,12 @@ export default {
           title: "scholarships",
           icon: "school",
           route: "/scholarships"
-        }
+        },
+        {
+          title: "payments",
+          icon: "attach_money",
+          route: "/payments"
+        },
       ]
     };
   },
