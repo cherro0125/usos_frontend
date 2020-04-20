@@ -19,7 +19,7 @@
 
             <v-list-item-content>
               <v-list-item-title>email@costam.pl</v-list-item-title>
-              <v-list-item-subtitle>Student</v-list-item-subtitle>
+              <v-list-item-subtitle>{{role}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -50,7 +50,8 @@
 export default {
   data() {
     return {
-      theme: this.$vuetify.theme.dark
+      theme: this.$vuetify.theme.dark,
+      role: ''
     };
   },
   props: ["dropdownMenu"],
@@ -78,6 +79,9 @@ export default {
     menu() {
       if (!this.menu) this.theme = this.$vuetify.theme.dark;
     }
+  },
+  created() {
+    this.role = localStorage.getItem("role");
   }
 };
 </script>
