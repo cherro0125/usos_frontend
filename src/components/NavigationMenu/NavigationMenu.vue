@@ -90,7 +90,17 @@ export default {
           title: "news",
           icon: "announcement",
           route: "/news"
-        }
+        },
+        {
+          title: "grades",
+          icon: "grade",
+          route: ""
+        },
+        {
+          title: "syllabus",
+          icon: "notes",
+          route: ""
+        },
       ],
       adminItems: [
         {
