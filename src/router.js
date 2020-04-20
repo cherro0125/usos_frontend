@@ -6,6 +6,7 @@ import Scholarships from './components/Scholarships/Scholarships';
 import Payments from "./components/Payments/Payments";
 import Applications from "./components/Applications/Applications";
 import News from "./components/News/News";
+import ApplicationFrom from './components/Applications/ApplicationForm/ApplicationForm';
 
 Vue.use(Router);
 
@@ -35,6 +36,10 @@ const router = new Router({
         {
             path: '/applications',
             component: Applications
+        },
+        {
+            path: '/applications/:id/apply',
+            component: ApplicationFrom
         },
     ]
 });
