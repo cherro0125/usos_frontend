@@ -18,8 +18,7 @@
 export default {
   data() {
     return {};
-  },
-  props: ["formName"]
+  }
 };
 </script>
 
