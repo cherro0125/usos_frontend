@@ -9,17 +9,73 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>email@costam.pl</v-list-item-title>
-          <v-list-item-subtitle>Student</v-list-item-subtitle>
+          <v-list-item-subtitle>{{role}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item class="list-items" v-for="item in items" :key="item.title" link :to="item.route">
-        <v-list-item-action>
-          <v-icon>{{item.icon}}</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>{{item.title}}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <div v-if="role === 'student'">
+        <v-list-item
+          class="list-items"
+          v-for="item in studentItems"
+          :key="item.title"
+          link
+          :to="item.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-else-if="role === 'lecturer'">
+        <v-list-item
+          class="list-items"
+          v-for="item in lecturerItems"
+          :key="item.title"
+          link
+          :to="item.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-else-if="role === 'dean'">
+        <v-list-item
+          class="list-items"
+          v-for="item in deanItems"
+          :key="item.title"
+          link
+          :to="item.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-else-if="role === 'admin'">
+        <v-list-item
+          class="list-items"
+          v-for="item in adminItems"
+          :key="item.title"
+          link
+          :to="item.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -29,7 +85,28 @@ export default {
   props: ["drawer"],
   data() {
     return {
-      items: [
+      lecturerItems: [
+        {
+          title: "news",
+          icon: "announcement",
+          route: "/news"
+        }
+      ],
+      adminItems: [
+        {
+          title: "news",
+          icon: "announcement",
+          route: "/news"
+        }
+      ],
+      deanItems: [
+        {
+          title: "news",
+          icon: "announcement",
+          route: "/news"
+        }
+      ],
+      studentItems: [
         {
           title: "news",
           icon: "announcement",
@@ -54,8 +131,9 @@ export default {
           title: "applications",
           icon: "description",
           route: "/applications"
-        },
-      ]
+        }
+      ],
+      role: ""
     };
   },
   computed: {
@@ -67,6 +145,9 @@ export default {
         this.$emit("update:drawer", this.showDrawer);
       }
     }
+  },
+  created() {
+    this.role = localStorage.getItem("role");
   }
 };
 </script>
