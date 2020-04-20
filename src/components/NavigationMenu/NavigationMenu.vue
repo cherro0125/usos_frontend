@@ -97,6 +97,26 @@ export default {
           title: "news",
           icon: "announcement",
           route: "/news"
+        },
+        {
+          title: "users accounts",
+          icon: "supervised_user_circle",
+          route: ""
+        },
+        {
+          title: "payments",
+          icon: "attach_money",
+          route: ""
+        },
+        {
+          title: "manage subjects",
+          icon: "subject",
+          route: ""
+        },
+        {
+          title: "scholarship applications",
+          icon: "school",
+          route: ""
         }
       ],
       deanItems: [
