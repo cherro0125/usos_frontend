@@ -134,7 +134,22 @@ export default {
           title: "news",
           icon: "announcement",
           route: "/news"
-        }
+        },
+        {
+          title: "manage subjects",
+          icon: "subject",
+          route: ""
+        },
+        {
+          title: "manage groups",
+          icon: "supervised_user_circle",
+          route: ""
+        },
+        {
+          title: "scholarships",
+          icon: "school",
+          route: ""
+        },
       ],
       studentItems: [
         {
