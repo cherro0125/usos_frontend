@@ -160,22 +160,22 @@ export default {
         {
           title: "grades",
           icon: "grade",
-          route: "/grades"
+          route: "/student/grades"
         },
         {
           title: "scholarships",
           icon: "school",
-          route: "/scholarships"
+          route: "/student/scholarships"
         },
         {
           title: "payments",
           icon: "attach_money",
-          route: "/payments"
+          route: "/student/payments"
         },
         {
           title: "applications",
           icon: "description",
-          route: "/applications"
+          route: "/student/applications"
         }
       ],
       role: ""

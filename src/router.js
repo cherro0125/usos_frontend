@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Grades from './components/Grades/Grades';
+import Grades from './components/Student/Grades/Grades';
 import Login from './components/Login/Login';
-import Scholarships from './components/Scholarships/Scholarships';
-import Payments from "./components/Payments/Payments";
-import Applications from "./components/Applications/Applications";
+import Scholarships from './components/Student/Scholarships/Scholarships';
+import Payments from "./components/Student/Payments/Payments";
+import Applications from "./components/Student/Applications/Applications";
 import News from "./components/News/News";
-import ApplicationFrom from './components/Applications/ApplicationForm/ApplicationForm';
+import ApplicationFrom from './components/Student/Applications/ApplicationForm/ApplicationForm';
 
 Vue.use(Router);
 
@@ -24,29 +24,29 @@ const router = new Router({
             meta: { isPublic: true, onlyForLoggedOut: true }
         },
         {
-            path: '/grades',
+            path: '/student/grades',
             component: Grades,
-            meta: {}
+            meta: { role: 'student' }
         },
         {
-            path: '/scholarships',
+            path: '/student/scholarships',
             component: Scholarships,
-            meta: {}
+            meta: { role: 'student' }
         },
         {
-            path: '/payments',
+            path: '/student/payments',
             component: Payments,
-            meta: {}
+            meta: { role: 'student' }
         },
         {
-            path: '/applications',
+            path: '/student/applications',
             component: Applications,
-            meta: {}
+            meta: { role: 'student' }
         },
         {
-            path: '/applications/:id/apply',
+            path: '/student/applications/:id/apply',
             component: ApplicationFrom,
-            meta: {}
+            meta: { role: 'student' }
         },
     ]
 });
@@ -56,11 +56,11 @@ router.beforeEach((to, from, next) => {
     const onlyForLoggedOut = to.matched.some(route => route.meta.onlyForLoggedOut);
     //const isLoggedIn = true;
     console.log(isPublic, onlyForLoggedOut)
-    if(!isPublic)
+    if (!isPublic)
         return next('/login');
-    
-    if(onlyForLoggedOut && localStorage.getItem('role')) 
-        return next('/news')  
+
+    if (onlyForLoggedOut && localStorage.getItem('role'))
+        return next('/news')
 
     next();
 });
