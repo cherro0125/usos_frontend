@@ -15,35 +15,54 @@ const router = new Router({
     routes: [
         {
             path: '/news',
-            component: News
+            component: News,
+            meta: { isPublic: true }
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            meta: { isPublic: true, onlyForLoggedOut: true }
         },
         {
             path: '/grades',
-            component: Grades
+            component: Grades,
+            meta: {}
         },
         {
             path: '/scholarships',
-            component: Scholarships
+            component: Scholarships,
+            meta: {}
         },
         {
             path: '/payments',
-            component: Payments
+            component: Payments,
+            meta: {}
         },
         {
             path: '/applications',
-            component: Applications
+            component: Applications,
+            meta: {}
         },
         {
             path: '/applications/:id/apply',
-            component: ApplicationFrom
+            component: ApplicationFrom,
+            meta: {}
         },
     ]
 });
 
-router.replace('/news');
+router.beforeEach((to, from, next) => {
+    const isPublic = to.matched.some(route => route.meta.isPublic);
+    const onlyForLoggedOut = to.matched.some(route => route.meta.onlyForLoggedOut);
+    //const isLoggedIn = true;
+    console.log(isPublic, onlyForLoggedOut)
+    if(!isPublic)
+        return next('/login');
+    
+    if(onlyForLoggedOut && localStorage.getItem('role')) 
+        return next('/news')  
+
+    next();
+});
 
 export default router;
