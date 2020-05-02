@@ -1,5 +1,8 @@
 
 /* eslint-disable */
+import axios from 'axios';
+import promiseWrapper from '../../utils/promiseWrapper';
+
 const state = {
     isLoggedIn: false
 };
@@ -25,6 +28,9 @@ const actions = {
             localStorage.setItem("role", "lecturer");
 
         commit('setLoggedIn', true);
+    },
+    async register({ commit }, data) {
+        const { res, err } = await promiseWrapper(axios.post('/auth/register'));
     },
     logout({ commit }) {
         localStorage.removeItem('role')
