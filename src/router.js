@@ -14,14 +14,14 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
-            path: '/news',
-            component: News,
-            meta: { isPublic: true }
-        },
-        {
             path: '/login',
             component: Login,
             meta: { isPublic: true, onlyForLoggedOut: true }
+        },
+        {
+            path: '/news',
+            component: News,
+            meta: {}
         },
         {
             path: '/student/grades',
@@ -54,15 +54,18 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     const isPublic = to.matched.some(route => route.meta.isPublic);
     const onlyForLoggedOut = to.matched.some(route => route.meta.onlyForLoggedOut);
-    //const isLoggedIn = true;
-    console.log(isPublic, onlyForLoggedOut)
-    if (!isPublic)
-        return next('/login');
+    const isLoggedIn = localStorage.getItem('role');
 
-    if (onlyForLoggedOut && localStorage.getItem('role'))
-        return next('/news')
-
-    next();
+    if (isLoggedIn) {
+        if (onlyForLoggedOut)
+                next('/news');
+        else
+            next();
+    }
+    else if(!isPublic)
+        next('/login');
+    else
+        next();
 });
 
 export default router;

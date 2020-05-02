@@ -5,7 +5,7 @@
       <v-toolbar-title>USOS</v-toolbar-title>
       <v-row v-if="isLoggedIn" align="end" justify="end">
         <DropdownMenu :dropdownMenu.sync="dropdownMenu"></DropdownMenu>
-        <v-btn class="ml-3">
+        <v-btn class="ml-3" @click='userLogout'>
           <span>LogOut</span>
           <v-icon class="ml-2">logout</v-icon>
         </v-btn>
@@ -24,7 +24,7 @@
 <script>
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -37,7 +37,13 @@ export default {
     NavigationMenu,
     DropdownMenu
   },
-  computed: mapGetters(["isLoggedIn"])
+  computed: mapGetters(["isLoggedIn"]),
+  methods: {
+    ...mapActions(['logout']),
+    userLogout() {
+      this.logout();
+    }
+  }
 };
 </script>
 

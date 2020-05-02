@@ -27,6 +27,7 @@ const actions = {
         commit('setLoggedIn', true);
     },
     logout({ commit }) {
+        localStorage.removeItem('role')
         commit('setLoggedIn', false);
     }
 };
