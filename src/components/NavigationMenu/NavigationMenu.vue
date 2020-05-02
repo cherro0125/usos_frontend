@@ -111,7 +111,7 @@ export default {
         {
           title: "users accounts",
           icon: "supervised_user_circle",
-          route: ""
+          route: "/rector/accounts/create"
         },
         {
           title: "payments",

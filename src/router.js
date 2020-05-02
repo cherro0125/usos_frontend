@@ -7,6 +7,7 @@ import Payments from "./components/Student/Payments/Payments";
 import Applications from "./components/Student/Applications/Applications";
 import News from "./components/News/News";
 import ApplicationFrom from './components/Student/Applications/ApplicationForm/ApplicationForm';
+import AccountCreation from './components/Rector/UserAccounts/AccountCreation/AccountCreation';
 
 Vue.use(Router);
 
@@ -47,6 +48,11 @@ const router = new Router({
             path: '/student/applications/:id/apply',
             component: ApplicationFrom,
             meta: { role: 'student' }
+        },
+        {
+            path: '/rector/accounts/create',
+            component: AccountCreation,
+            meta: { role: 'rector' }
         },
     ]
 });
