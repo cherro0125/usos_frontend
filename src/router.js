@@ -10,6 +10,8 @@ import Applications from "./components/Student/Applications/Applications";
 import News from "./components/News/News";
 import ApplicationFrom from './components/Student/Applications/ApplicationForm/ApplicationForm';
 import AccountCreation from './components/Rector/UserAccounts/AccountCreation/AccountCreation';
+import GradesTable from './components/Lecturer/Grades/GradesTable/GradesTable';
+import LecturerGradesPanel from './components/Lecturer/Grades/LecturerGradesPanel';
 
 Vue.use(Router);
 
@@ -55,6 +57,16 @@ const router = new Router({
             path: '/rector/accounts/create',
             component: AccountCreation,
             meta: { role: 'rector' }
+        },
+        {
+            path: '/lecturer/grades',
+            component: LecturerGradesPanel,
+            meta: { role: 'lecturer' }
+        },
+        {
+            path: '/lecturer/grades/:subject/:group',
+            component: GradesTable,
+            meta: { role: 'lecturer' }
         },
     ]
 });

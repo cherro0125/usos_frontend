@@ -94,7 +94,7 @@ export default {
         {
           title: "grades",
           icon: "grade",
-          route: ""
+          route: "/lecturer/grades"
         },
         {
           title: "syllabus",
