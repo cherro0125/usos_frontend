@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
@@ -62,14 +63,32 @@ router.beforeEach((to, from, next) => {
     const isPublic = to.matched.some(route => route.meta.isPublic);
     const onlyForLoggedOut = to.matched.some(route => route.meta.onlyForLoggedOut);
     const isLoggedIn = store.getters.isLoggedIn;
+    const role = localStorage.getItem('role');
+    const roleResticted = to.matched.some(route => route.meta.role); 
+    const rectorAccess = to.matched.some(route => route.meta.role === 'rector');
+    const studentAccess = to.matched.some(route => route.meta.role === 'student');
+    const deanAcess = to.matched.some(route => route.meta.role === 'dean');
+    const lecturerAcess = to.matched.some(route => route.meta.role === 'lecturer');
 
     if (isLoggedIn) {
         if (onlyForLoggedOut)
-                next('/news');
+            next('/news');
+        else if (roleResticted) {
+            if (rectorAccess && role.toLowerCase() === 'rector')
+                next();
+            else if (studentAccess && role.toLowerCase() === 'student')
+                next();
+            else if (deanAcess && role.toLowerCase() === 'dean')
+                next();
+            else if (lecturerAcess && role.toLowerCase() === 'lecturer')
+                next();
+            else 
+                next('news');
+        }
         else
             next();
     }
-    else if(!isPublic)
+    else if (!isPublic)
         next('/login');
     else
         next();
