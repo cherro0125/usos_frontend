@@ -7,7 +7,7 @@ import axios from 'axios';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
-axios.defaults.baseURL = process.env.BASE_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL || 'http://localhost:2137/api';
 
 const token = localStorage.getItem('token');
 if (token) {

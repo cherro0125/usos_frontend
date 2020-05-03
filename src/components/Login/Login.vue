@@ -46,8 +46,8 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    signin() {
-      this.login(this.credentials);
+    async signin() {
+      await this.login(this.credentials);
       this.$router.push('/news');
     }
   }

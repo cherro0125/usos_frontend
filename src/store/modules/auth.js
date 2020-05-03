@@ -15,25 +15,15 @@ const mutations = {
 
 const actions = {
     async login({ commit }, params) {
-        // if (credentials.username === "student")
-        //     localStorage.setItem("role", "student");
-
-        // else if (credentials.username === "admin")
-        //     localStorage.setItem("role", "admin");
-
-        // else if (credentials.username === "dean")
-        //     localStorage.setItem("role", "dean");
-
-        // else if (credentials.username === "lecturer")
-        //     localStorage.setItem("role", "lecturer");
-
-        const { res, err } = await promiseWrapper(axios.post('/test', params));
+        const { res, err } = await promiseWrapper(axios.post('/auth/login', params));
         if (res) {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.user.role);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
             commit('setLoggedIn', true);
         }
+        else 
+            console.log(err);
     },
     async register({ commit }, params) {
         const { res, err } = await promiseWrapper(axios.post('/auth/register', params));
