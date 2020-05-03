@@ -18,7 +18,7 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>email@costam.pl</v-list-item-title>
+              <v-list-item-title>{{username}}</v-list-item-title>
               <v-list-item-subtitle>{{role}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -51,7 +51,8 @@ export default {
   data() {
     return {
       theme: this.$vuetify.theme.dark,
-      role: ''
+      role: '',
+      username: ''
     };
   },
   props: ["dropdownMenu"],
@@ -82,6 +83,7 @@ export default {
   },
   created() {
     this.role = localStorage.getItem("role");
+    this.username = localStorage.getItem("username");
   }
 };
 </script>
