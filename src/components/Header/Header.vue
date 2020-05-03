@@ -42,7 +42,8 @@ export default {
     ...mapActions(['logout']),
     userLogout() {
       this.logout();
-      this.$router.push('/login')
+      if(!this.isLoggedIn)
+        this.$router.push('/login')
     }
   }
 };

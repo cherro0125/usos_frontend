@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store/store';
 import Grades from './components/Student/Grades/Grades';
 import Login from './components/Login/Login';
 import Scholarships from './components/Student/Scholarships/Scholarships';
@@ -60,7 +61,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     const isPublic = to.matched.some(route => route.meta.isPublic);
     const onlyForLoggedOut = to.matched.some(route => route.meta.onlyForLoggedOut);
-    const isLoggedIn = localStorage.getItem('role');
+    const isLoggedIn = store.getters.isLoggedIn;
 
     if (isLoggedIn) {
         if (onlyForLoggedOut)

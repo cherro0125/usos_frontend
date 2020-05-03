@@ -9,7 +9,7 @@ const state = {
 
 const mutations = {
     setLoggedIn(state, payload) {
-        state.isLoggedIn = payload;
+        state.token = payload;
     }
 };
 
@@ -20,7 +20,7 @@ const actions = {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.user.role);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
-            commit('setLoggedIn', true);
+            commit('setLoggedIn', res.data.token);
         }
         else 
             console.log(err);
@@ -32,7 +32,7 @@ const actions = {
         localStorage.removeItem('role');
         localStorage.removeItem('token');
         delete axios.defaults.headers.common['Authorization'];
-        commit('setLoggedIn', false);
+        commit("setLoggedIn", '');
     }
 };
 
