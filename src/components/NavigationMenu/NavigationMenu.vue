@@ -12,7 +12,7 @@
           <v-list-item-subtitle>{{role}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <div v-if="role === 'student'">
+      <div v-if="role === 'STUDENT'">
         <v-list-item
           class="list-items"
           v-for="item in studentItems"
@@ -28,7 +28,7 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div v-else-if="role === 'lecturer'">
+      <div v-else-if="role === 'LECTURER'">
         <v-list-item
           class="list-items"
           v-for="item in lecturerItems"
@@ -44,7 +44,7 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div v-else-if="role === 'dean'">
+      <div v-else-if="role === 'DEAN'">
         <v-list-item
           class="list-items"
           v-for="item in deanItems"
@@ -60,7 +60,7 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div v-else-if="role === 'admin'">
+      <div v-else-if="role === 'RECTOR'">
         <v-list-item
           class="list-items"
           v-for="item in adminItems"
