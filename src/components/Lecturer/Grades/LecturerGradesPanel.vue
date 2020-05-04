@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         showGradesTable() {
-            this.$router.push("/lecturer/grades/subject/group");
+            this.$router.push("/lecturer/grades/course");
         }
     }
 }

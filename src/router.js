@@ -64,7 +64,7 @@ const router = new Router({
             meta: { role: 'lecturer' }
         },
         {
-            path: '/lecturer/grades/:subject/:group',
+            path: '/lecturer/grades/:course',
             component: GradesTable,
             meta: { role: 'lecturer' }
         },
