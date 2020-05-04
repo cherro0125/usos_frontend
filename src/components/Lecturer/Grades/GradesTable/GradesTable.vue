@@ -129,6 +129,7 @@ export default {
       //
       this.studentsConst = JSON.parse(JSON.stringify(this.students));
       this.courseId = course.id;
+      this.edit=false;
     }
   },
   async created() {
