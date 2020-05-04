@@ -46,21 +46,14 @@ export default {
       students: [],
       studentsConst: [],
       edit: false,
-      grades: [
-        "UNCLASSIFIED",
-        "ALLOWING",
-        "SUFFICIENT",
-        "GOOD",
-        "VERY_GOOD",
-        "EXCELLENT"
-      ],
+      grades: [],
       courseFullName: "",
       courseId: ""
     };
   },
-  computed: mapGetters(["courseData"]),
+  computed: mapGetters(["courseData", "gradesValues"]),
   methods: {
-    ...mapActions(["getCourseData", "addGrade"]),
+    ...mapActions(["getCourseData", "addGrade", "getGradesValues"]),
     async saveGrades() {
       const firstTermStudents = [],
         secondTermStudents = [];
@@ -135,6 +128,9 @@ export default {
   async created() {
     await this.getCourseData();
     this.retrieveData();
+    await this.getGradesValues();
+    this.grades = this.gradesValues;
+    console.log(this.grades)
   }
 };
 </script>
