@@ -12,7 +12,7 @@ axios.defaults.baseURL = process.env.VUE_APP_BASE_URL || 'http://localhost:2137/
 
 const token = localStorage.getItem('token');
 if (token) {
-  axios.defaults.headers.common['Autorization'] = 'Bearer ' + token;
+  axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
 }
 
 Vue.use(Notifications)

@@ -20,7 +20,8 @@ const actions = {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.user.role);
             localStorage.setItem("username", res.data.user.username);
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+            localStorage.setItem("userId", res.data.user.id);
+            axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
             commit('setLoggedIn', res.data.token);
         }
         else 
@@ -33,6 +34,7 @@ const actions = {
         localStorage.removeItem('role');
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('userId')
         delete axios.defaults.headers.common['Authorization'];
         commit("setLoggedIn", '');
     }

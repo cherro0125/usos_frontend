@@ -13,10 +13,14 @@ const mutations = {
 };
 
 const actions = {
-    async getCourseData({ commit }, data) {
-        const { res, err } = await promiseWrapper(axios.get(`/course/group/${data}`));
-        if (res)
+    async getCourseData({ commit }) {
+        const { res, err } = await promiseWrapper(axios.get(`/course/group/${localStorage.getItem("userId")}`));
+        if (res){
+            console.log(res, res.data)
             commit('setCourseData', res.data);
+        }
+        else
+            console.log(err)
 
     }
 };
