@@ -10,7 +10,7 @@
         hide-default-footer
         :dark="$vuetify.theme.dark"
         :headers="headers"
-        :items="studentsGradesData"
+        :items="students"
         class="elevation-1"
       >
         <template v-slot:item.firstTerm="{item}">
@@ -31,26 +31,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+/* eslint-disable */
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       headers: [
-        { text: "Index", value: "index" },
-        { text: "Name", value: "name" },
-        { text: "Surname", value: "surname" },
+        { text: "Index", value: "id" },
+        { text: "Name", value: "firstName" },
+        { text: "Surname", value: "lastName" },
         { text: "I Term", value: "firstTerm", width: "150" },
         { text: "II Term", value: "secondTerm", width: "150" }
       ],
-      studentsGradesData: [
-        {
-          index: 1,
-          name: "Jan",
-          surname: "Kowalski",
-          firstTerm: 2,
-          secondTerm: ""
-        }
-      ],
+      students: [],
       edit: false,
       grades: [2, 3, 4, 5],
       courseFullName: ""
@@ -58,12 +51,14 @@ export default {
   },
   computed: mapGetters(["courseData"]),
   methods: {
-    saveGrades() {
-      console.log(this.studentsGradesData[0]);
-    }
+    ...mapActions(['getCourseData']),
+    saveGrades() {}
   },
-  created() {
+  async created() {
+    await this.getCourseData();
     this.courseFullName = this.$route.params.course;
+    const course = this.courseData.find(course => course.name === this.courseFullName);
+    this.students = course.students;
   }
 };
 </script>
