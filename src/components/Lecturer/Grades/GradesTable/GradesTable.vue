@@ -130,7 +130,6 @@ export default {
     this.retrieveData();
     await this.getGradesValues();
     this.grades = this.gradesValues;
-    console.log(this.grades)
   }
 };
 </script>
