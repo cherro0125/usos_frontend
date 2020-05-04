@@ -34,7 +34,7 @@ const actions = {
         localStorage.removeItem('role');
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-        localStorage.removeItem('userId')
+        localStorage.removeItem('userId');
         delete axios.defaults.headers.common['Authorization'];
         commit("setLoggedIn", '');
     }

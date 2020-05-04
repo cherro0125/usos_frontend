@@ -15,10 +15,8 @@ const mutations = {
 const actions = {
     async getCourseData({ commit }) {
         const { res, err } = await promiseWrapper(axios.get(`/course/group/${localStorage.getItem("userId")}`));
-        if (res){
-            console.log(res, res.data)
+        if (res)
             commit('setCourseData', res.data);
-        }
         else
             console.log(err)
 
