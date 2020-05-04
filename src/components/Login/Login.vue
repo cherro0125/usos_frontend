@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -44,11 +44,25 @@ export default {
       }
     };
   },
+  computed: mapGetters(["isLoggedIn"]),
   methods: {
     ...mapActions(["login"]),
     async signin() {
       await this.login(this.credentials);
-      this.$router.push('/news');
+      if (this.isLoggedIn) {
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Login successfull"
+        });
+        this.$router.push("/news");
+      }
+      else
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Login failed"
+        });
     }
   }
 };

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
+import Notifications from 'vue-notification'
 import router from './router';
 import store from './store/store';
 import axios from 'axios';
@@ -14,6 +15,7 @@ if (token) {
   axios.defaults.headers.common['Autorization'] = 'Bearer ' + token;
 }
 
+Vue.use(Notifications)
 Vue.config.productionTip = false
 
 new Vue({
