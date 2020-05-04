@@ -97,10 +97,15 @@ export default {
               return this.addGrade(params);
             })
           );
-        
-        await this.getCourseData();
-        this.retrieveData();
+        //UNCOMMENT THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
+        // await this.getCourseData();
+        // this.retrieveData();
+        //
 
+        //DELETE THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
+        this.edit =false
+        //
+        
         this.$notify({
           group: "foo",
           type: "success",
