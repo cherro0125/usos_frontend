@@ -20,6 +20,11 @@ const actions = {
         else
             console.log(err)
 
+    },
+    async addGrade({ commit }, data) {
+        const { res, err } = await promiseWrapper(axios.post('/grade/add', data));
+        if (err)
+            console.log(err)
     }
 };
 

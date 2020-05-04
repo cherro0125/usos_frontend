@@ -40,25 +40,100 @@ export default {
         { text: "Index", value: "id" },
         { text: "Name", value: "firstName" },
         { text: "Surname", value: "lastName" },
-        { text: "I Term", value: "firstTerm", width: "150" },
-        { text: "II Term", value: "secondTerm", width: "150" }
+        { text: "I Term", value: "firstTerm", width: "250" },
+        { text: "II Term", value: "secondTerm", width: "250" }
       ],
       students: [],
+      studentsConst: [],
       edit: false,
-      grades: [2, 3, 4, 5],
-      courseFullName: ""
+      grades: [
+        "UNCLASSIFIED",
+        "ALLOWING",
+        "SUFFICIENT",
+        "GOOD",
+        "VERY_GOOD",
+        "EXCELLENT"
+      ],
+      courseFullName: "",
+      courseId: ""
     };
   },
   computed: mapGetters(["courseData"]),
   methods: {
-    ...mapActions(['getCourseData']),
-    saveGrades() {}
+    ...mapActions(["getCourseData", "addGrade"]),
+    async saveGrades() {
+      const firstTermStudents = [],
+        secondTermStudents = [];
+      this.studentsConst.forEach(studentConst => {
+        this.students.forEach(student => {
+          if (studentConst.firstTerm !== student.firstTerm)
+            firstTermStudents.push(student);
+          if (studentConst.secondTerm !== student.secondTerm)
+            secondTermStudents.push(student);
+        });
+      });
+
+      const params = {
+        description: "",
+        courseGroupId: this.courseId,
+        createdById: localStorage.getItem("userId")
+      };
+
+      if (!firstTermStudents.length && !secondTermStudents.length)
+        this.$notify({
+          group: "foo",
+          title: "grades not changed"
+        });
+      else {
+        if (firstTermStudents.length)
+          await Promise.all(
+            firstTermStudents.map(student => {
+              params.examDateType = "FIRST";
+              params.assignedUserId = student.id;
+              params.value = student.firstTerm;
+              return this.addGrade(params);
+            })
+          );
+
+        if (secondTermStudents.length)
+          await Promise.all(
+            secondTermStudents.map(student => {
+              params.examDateType = "SECOND";
+              params.assignedUserId = student.id;
+              params.value = student.secondTerm;
+              return this.addGrade(params);
+            })
+          );
+        
+        await this.getCourseData();
+        this.retrieveData();
+
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "grades sucessfully saved"
+        });
+      }
+    },
+    retrieveData() {
+      this.courseFullName = this.$route.params.course;
+      const course = this.courseData.find(
+        course => course.name === this.courseFullName
+      );
+      this.students = course.students;
+      //DELETE THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
+      this.students.forEach(student => {
+        student.firstTerm = "";
+        student.secondTerm = "";
+      });
+      //
+      this.studentsConst = JSON.parse(JSON.stringify(this.students));
+      this.courseId = course.id;
+    }
   },
   async created() {
     await this.getCourseData();
-    this.courseFullName = this.$route.params.course;
-    const course = this.courseData.find(course => course.name === this.courseFullName);
-    this.students = course.students;
+    this.retrieveData();
   }
 };
 </script>
