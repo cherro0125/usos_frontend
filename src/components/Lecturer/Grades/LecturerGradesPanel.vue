@@ -31,7 +31,7 @@ export default {
   methods: {
     ...mapActions(["getCourseData"]),
     showGradesTable() {
-      this.$router.push("/lecturer/grades/course");
+      this.$router.push(`/lecturer/grades/${this.courseGroup}`);
     }
   },
   async created() {

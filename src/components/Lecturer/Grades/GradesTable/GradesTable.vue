@@ -1,7 +1,11 @@
 <template>
   <v-container>
     <v-card class="pa-6">
-      <v-switch v-model="edit" :label="'grades editing ' + (edit ? 'enabled' : 'disabled')"></v-switch>
+      <v-row>
+        <v-card-title>{{this.courseFullName}}</v-card-title>
+        <v-spacer></v-spacer>
+        <v-switch v-model="edit" :label="'grades editing ' + (edit ? 'enabled' : 'disabled')"></v-switch>
+      </v-row>
       <v-data-table
         hide-default-footer
         :dark="$vuetify.theme.dark"
@@ -27,6 +31,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -34,8 +39,8 @@ export default {
         { text: "Index", value: "index" },
         { text: "Name", value: "name" },
         { text: "Surname", value: "surname" },
-        { text: "I Term", value: "firstTerm" },
-        { text: "II Term", value: "secondTerm" }
+        { text: "I Term", value: "firstTerm", width: "150" },
+        { text: "II Term", value: "secondTerm", width: "150" }
       ],
       studentsGradesData: [
         {
@@ -47,13 +52,18 @@ export default {
         }
       ],
       edit: false,
-      grades: [2,3,4,5]
+      grades: [2, 3, 4, 5],
+      courseFullName: ""
     };
   },
+  computed: mapGetters(["courseData"]),
   methods: {
-      saveGrades() {
-          console.log(this.studentsGradesData[0])
-      }
+    saveGrades() {
+      console.log(this.studentsGradesData[0]);
+    }
+  },
+  created() {
+    this.courseFullName = this.$route.params.course;
   }
 };
 </script>
