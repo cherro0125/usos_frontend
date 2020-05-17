@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -64,19 +64,27 @@ export default {
         firstName: "",
         lastName: "",
         password: "test",
-        phoneNumber: '',
-        city: '',
-        street: '',
-        streetNumber: '',
-        houseNumber: '',
-        zipCode: ''
+        phoneNumber: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        houseNumber: "",
+        zipCode: ""
       }
     };
   },
+  computed: mapGetters(["notification"]),
   methods: {
     ...mapActions(["register"]),
     async createAccount() {
       await this.register(this.userData);
+      this.$notify({
+        group: "foo",
+        type: this.notification ? "success" : "error",
+        title: this.notification
+          ? "user successfully registered"
+          : "error during user registration"
+      });
     },
     save(date) {
       this.$refs.menu.save(date);

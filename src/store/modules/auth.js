@@ -5,11 +5,15 @@ import promiseWrapper from '../../utils/promiseWrapper';
 
 const state = {
     token: localStorage.getItem('token') || '',
+    showSuccessNotification: false
 };
 
 const mutations = {
     setLoggedIn(state, payload) {
         state.token = payload;
+    },
+    setNotification(state, payload) {
+        state.showSuccessNotification = payload;
     }
 };
 
@@ -29,6 +33,7 @@ const actions = {
     },
     async register({ commit }, params) {
         const { res, err } = await promiseWrapper(axios.post('/auth/register', params));
+        commit('setNotification', res ? true : false);
     },
     logout({ commit }) {
         localStorage.removeItem('role');
@@ -41,8 +46,8 @@ const actions = {
 };
 
 const getters = {
-    isLoggedIn: state => !!state.token
-    // isLoggedIn: state => state.isLoggedIn
+    isLoggedIn: state => !!state.token,
+    notification: state => state.showSuccessNotification
 };
 
 export default {
