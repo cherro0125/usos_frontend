@@ -14,13 +14,11 @@ export default {
   data() {
     return {
       headers: [
-        {
-          text: "Subject",
-          align: "start",
-          value: "name"
-        },
-        { text: "Mark", value: "mark" },
-        { text: "Ects", value: "ects" },
+        { text: "subject", value: "name" },
+        { text: "type", value: "type" },
+        { text: "ects", value: "ects" },
+        { text: "I term", value: "firstTerm" },
+        { text: "II term", value: "secondTerm" },
       ]
     };
   }
