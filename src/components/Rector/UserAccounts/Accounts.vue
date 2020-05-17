@@ -59,7 +59,7 @@
               <v-card-title class="justify-center">Are you sure want to delete this user</v-card-title>
               <v-card-actions class="justify-center">
                 <v-btn @click="deleteDialog = false">No</v-btn>
-                <v-btn @click="deleteDialog = false">Yes</v-btn>
+                <v-btn @click="confirmDeletion">Yes</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -123,7 +123,8 @@ export default {
         zipCode: ""
       },
       roles: ["STUDENT", "DEAN", "LECTURER"],
-      roleSelect: ""
+      roleSelect: "",
+      indexToDelete: ''
     };
   },
 
@@ -144,20 +145,16 @@ export default {
     await this.getUsers(this.roleSelect);
   },
   methods: {
-    ...mapActions(["getUsers"]),
+    ...mapActions(["getUsers", "deleteUser"]),
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-
     deleteItem(item) {
-      // const index = this.desserts.indexOf(item);
-      // confirm("Are you sure you want to delete this item?") &&
-      //   this.desserts.splice(index, 1);
+      this.indexToDelete = this.users.indexOf(item);
       this.deleteDialog = true;
     },
-
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -165,7 +162,6 @@ export default {
         this.editedIndex = -1;
       });
     },
-
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
@@ -173,6 +169,12 @@ export default {
         this.desserts.push(this.editedItem);
       }
       this.close();
+    },
+    async confirmDeletion() {
+      const id = this.users[this.indexToDelete].id;
+      await this.deleteUser(id);
+      await this.getUsers(this.roleSelect);
+      this.deleteDialog = false;
     }
   }
 };

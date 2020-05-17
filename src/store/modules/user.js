@@ -17,6 +17,9 @@ const actions = {
     async getUsers({ commit }, data) {
         const { res, err } = await promiseWrapper(axios.get(`/user/${data}/all`));
         commit('setUsers', res.data);
+    },
+    async deleteUser({ commit }, data) {
+        const { res, err } = await promiseWrapper(axios.delete(`/user/${data}`));
     }
 };
 
