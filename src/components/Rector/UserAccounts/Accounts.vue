@@ -3,9 +3,8 @@
     <h2 class="ml-2 mb-5">User list</h2>
     <v-data-table :headers="headers" :items="users" class="elevation-1">
       <template v-slot:top>
-        <v-toolbar flat>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
+        <v-toolbar flat class="pa-2">
+          <v-select v-model="roleSelect" class="mr-8 mt-4" label="role" :items="roles"></v-select>
           <v-btn color="primary" dark class="mb-2" to="/rector/accounts/create">Register new user</v-btn>
           <v-dialog v-model="dialog" max-width="500px">
             <v-card>
@@ -55,7 +54,7 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="deleteDialog"  max-width="500px">
+          <v-dialog v-model="deleteDialog" max-width="500px">
             <v-card class="pa-6">
               <v-card-title class="justify-center">Are you sure want to delete this user</v-card-title>
               <v-card-actions class="justify-center">
@@ -75,85 +74,77 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 /* eslint-disable */
 export default {
-  data: () => ({
-    dialog: false,
-    deleteDialog: false,
-    headers: [
-      { text: "name", value: "firstName", sortable: false},
-      { text: "surname", value: "lastName", sortable: false },
-      { text: "email", value: "username", sortable: false },
-      { text: "role", value: "role",sortable: false },
-      { text: "date of birth", value: "dateOfBirth", sortable: false },
-      { text: "phone number", value: "phoneNumber", sortable: false},
-      { text: "city", value: "city", sortable: false},
-      { text: "street", value: "street", sortable: false},
-      { text: "street number", value: "streetNumber", sortable: false},
-      { text: "house number", value: "houseNumber", sortable: false},
-      { text: "zip code", value: "zipCode", sortable: false},
-      { text: 'actions', value: 'actions', sortable: false },
-    ],
-    users: [{
-      role: "STUDENT",
-      username: "jan",
-      dateOfBirth: "",
-      firstName: "jan",
-      lastName: "Kowalski",
-      phoneNumber: "",
-      city: "",
-      street: "",
-      streetNumber: "",
-      houseNumber: "",
-      zipCode: ""
-    }],
-    editedIndex: -1,
-    editedItem: {
-      role: "STUDENT",
-      username: "",
-      dateOfBirth: "",
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      city: "",
-      street: "",
-      streetNumber: "",
-      houseNumber: "",
-      zipCode: ""
-    },
-    defaultItem: {
-      role: "STUDENT",
-      username: "",
-      dateOfBirth: "",
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      city: "",
-      street: "",
-      streetNumber: "",
-      houseNumber: "",
-      zipCode: ""
-    }
-  }),
+  data() {
+    return {
+      dialog: false,
+      deleteDialog: false,
+      headers: [
+        { text: "name", value: "firstName", sortable: false },
+        { text: "surname", value: "lastName", sortable: false },
+        { text: "email", value: "username", sortable: false },
+        { text: "role", value: "role", sortable: false },
+        { text: "date of birth", value: "dateOfBirth", sortable: false },
+        { text: "phone number", value: "phoneNumber", sortable: false },
+        { text: "city", value: "city", sortable: false },
+        { text: "street", value: "street", sortable: false },
+        { text: "street number", value: "streetNumber", sortable: false },
+        { text: "house number", value: "houseNumber", sortable: false },
+        { text: "zip code", value: "zipCode", sortable: false },
+        { text: "actions", value: "actions", sortable: false }
+      ],
+      editedIndex: -1,
+      editedItem: {
+        role: "STUDENT",
+        username: "",
+        dateOfBirth: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        houseNumber: "",
+        zipCode: ""
+      },
+      defaultItem: {
+        role: "STUDENT",
+        username: "",
+        dateOfBirth: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        houseNumber: "",
+        zipCode: ""
+      },
+      roles: ["STUDENT", "RECTOR", "LECTURER"],
+      roleSelect: ""
+    };
+  },
 
   computed: {
+    ...mapGetters(["users"])
   },
 
   watch: {
     dialog(val) {
       val || this.close();
+    },
+    async roleSelect() {
+      await this.getUsers(this.roleSelect);
     }
   },
-
-  created() {
-    this.initialize();
+  async created() {
+    this.roleSelect = "STUDENT";
+    await this.getUsers(this.roleSelect);
   },
-
   methods: {
-    initialize() {
-      this.desserts = [];
-    },
-
+    ...mapActions(["getUsers"]),
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
