@@ -122,7 +122,7 @@ export default {
         houseNumber: "",
         zipCode: ""
       },
-      roles: ["STUDENT", "RECTOR", "LECTURER"],
+      roles: ["STUDENT", "DEAN", "LECTURER"],
       roleSelect: ""
     };
   },
