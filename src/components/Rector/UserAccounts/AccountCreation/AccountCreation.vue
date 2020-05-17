@@ -85,6 +85,7 @@ export default {
           ? "user successfully registered"
           : "error during user registration"
       });
+      this.$router.push("/rector/accounts");
     },
     save(date) {
       this.$refs.menu.save(date);
