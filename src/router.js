@@ -9,6 +9,7 @@ import Payments from "./components/Student/Payments/Payments";
 import Applications from "./components/Student/Applications/Applications";
 import News from "./components/News/News";
 import ApplicationFrom from './components/Student/Applications/ApplicationForm/ApplicationForm';
+import Accounts from './components/Rector/UserAccounts/Accounts';
 import AccountCreation from './components/Rector/UserAccounts/AccountCreation/AccountCreation';
 import GradesTable from './components/Lecturer/Grades/GradesTable/GradesTable';
 import LecturerGradesPanel from './components/Lecturer/Grades/LecturerGradesPanel';
@@ -52,6 +53,11 @@ const router = new Router({
             path: '/student/applications/:id/apply',
             component: ApplicationFrom,
             meta: { role: 'student' }
+        },
+        {
+            path: '/rector/accounts',
+            component: Accounts,
+            meta: { role: 'rector' }
         },
         {
             path: '/rector/accounts/create',
