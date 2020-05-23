@@ -51,9 +51,14 @@ export default {
       courseId: ""
     };
   },
-  computed: mapGetters(["courseData", "gradesValues"]),
+  computed: mapGetters(["courseData", "gradesValues", "courseStudentsData"]),
   methods: {
-    ...mapActions(["getCourseData", "addGrade", "getGradesValues"]),
+    ...mapActions([
+      "getCourseData",
+      "addGrade",
+      "getGradesValues",
+      "getCourseStudentsData"
+    ]),
     async saveGrades() {
       const firstTermStudents = [],
         secondTermStudents = [];
@@ -97,15 +102,10 @@ export default {
               return this.addGrade(params);
             })
           );
-        //UNCOMMENT THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
-        // await this.getCourseData();
-        // this.retrieveData();
-        //
-
-        //DELETE THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
-        this.edit =false
-        //
         
+        await this.getCourseData();
+        this.retrieveCourseData();
+
         this.$notify({
           group: "foo",
           type: "success",
@@ -113,27 +113,27 @@ export default {
         });
       }
     },
-    retrieveData() {
+    retrieveCourseData() {
       this.courseFullName = this.$route.params.course;
       const course = this.courseData.find(
         course => course.name === this.courseFullName
       );
-      this.students = course.students;
-      //DELETE THIS WHEN GRADES WILL BE RETRIEVED FROM BACKEND
-      this.students.forEach(student => {
-        student.firstTerm = "";
-        student.secondTerm = "";
-      });
-      //
+      this.students = this.courseStudentsData;
       this.studentsConst = JSON.parse(JSON.stringify(this.students));
       this.courseId = course.id;
-      this.edit=false;
+      this.edit = false;
     }
   },
   async created() {
-    await this.getCourseData();
-    this.retrieveData();
-    await this.getGradesValues();
+    await Promise.all([
+      this.getGradesValues(),
+      this.getCourseData(),
+      this.getCourseStudentsData({
+        id: localStorage.getItem("userId"),
+        course: this.$route.params.course
+      })
+    ]);
+    this.retrieveCourseData();
     this.grades = this.gradesValues;
   }
 };
