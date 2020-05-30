@@ -7,23 +7,24 @@
         color="primary mr-5"
         dark
         @click.stop="addNewsModal = true"
-        v-if="this.role === 'DEAN'"
+        v-if="this.role === 'DEAN' || this.role === 'RECTOR'"
       >Add news</v-btn>
     </v-row>
-    <p class="pa-5">
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    </p>
-    <AddNewsModal v-if="this.role === 'DEAN'" :addNewsModal.sync="addNewsModal" @addNews="addNews">
-    </AddNewsModal>
+    <v-card v-for="item in news" :key="item.id">
+      <v-card-title>{{item.title}}</v-card-title>
+      <v-card-text>{{item.description}}</v-card-text>
+    </v-card>
+    <AddNewsModal
+      v-if="this.role === 'DEAN' || this.role === 'RECTOR'"
+      :addNewsModal.sync="addNewsModal"
+      @addNews="addNews"
+    ></AddNewsModal>
   </v-container>
 </template>
 
 <script>
 import AddNewsModal from "./AddNews/AddNews";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -33,13 +34,15 @@ export default {
     };
   },
   components: { AddNewsModal },
+  computed: mapGetters(["news"]),
   created() {
     this.role = localStorage.getItem("role");
   },
   methods: {
-    addNews(data) {
-      console.log(data)
+    ...mapActions(["addAnnoucement"]),
+    async addNews(data) {
       this.addNewsModal = false;
+      await this.addAnnoucement(data);
     }
   }
 };
