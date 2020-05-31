@@ -13,12 +13,22 @@ const mutations = {
 };
 
 const actions = {
-    async addAnnoucement({ commit }, data) {
-        commit('setNews', [data]);
-        
-    },
-    async getAnnoucements({ commit }, data) {
+    async addAnnoucement({ commit, dispatch }, data) {
+        const { res, err } = await promiseWrapper(axios.post('/news/add', data));
 
+        if (res)
+            dispatch('getAnnoucements');
+        else
+            console.log(err);
+
+    },
+    async getAnnoucements({ commit }) {
+        const { res, err } = await promiseWrapper(axios.get('/news/all'));
+
+        if (res)
+            commit('setNews', res.data)
+        else
+            console.log(err);
     }
 };
 

@@ -10,9 +10,14 @@
         v-if="this.role === 'DEAN' || this.role === 'RECTOR'"
       >Add news</v-btn>
     </v-row>
-    <v-card v-for="item in news" :key="item.id">
+    <v-card class="mb-6" v-for="item in news" :key="item.id">
       <v-card-title>{{item.title}}</v-card-title>
       <v-card-text>{{item.description}}</v-card-text>
+      <v-row>
+      <v-card-subtitle class="ml-3">{{"Added by " + item.createdBy.firstName + " " + item.createdBy.lastName}}</v-card-subtitle>
+      <v-spacer></v-spacer>
+      <v-card-subtitle class="mr-3">{{item.createdAt}}</v-card-subtitle>
+      </v-row>
     </v-card>
     <AddNewsModal
       v-if="this.role === 'DEAN' || this.role === 'RECTOR'"
@@ -35,13 +40,15 @@ export default {
   },
   components: { AddNewsModal },
   computed: mapGetters(["news"]),
-  created() {
+  async created() {
     this.role = localStorage.getItem("role");
+    await this.getAnnoucements();
   },
   methods: {
-    ...mapActions(["addAnnoucement"]),
+    ...mapActions(["addAnnoucement", "getAnnoucements"]),
     async addNews(data) {
       this.addNewsModal = false;
+      data.createdById = localStorage.getItem("userId");
       await this.addAnnoucement(data);
     }
   }
