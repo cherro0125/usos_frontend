@@ -144,12 +144,13 @@ export default {
     }
   },
   async created() {
+    await this.getCourseData();
     await Promise.all([
       this.getGradesValues(),
-      this.getCourseData(),
       this.getCourseStudentsData({
         id: localStorage.getItem("userId"),
-        course: this.$route.params.course
+        course: this.$route.params.course,
+        students: this.courseData[0].students
       })
     ]);
     this.retrieveCourseData();

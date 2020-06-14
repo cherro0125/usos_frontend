@@ -45,9 +45,9 @@ const actions = {
         const { id, course, students } = data;
         const { res, err } = await promiseWrapper(axios.get(`/grade/lecturer/${id}`));
         ///1. retrieve all students, 2. add grade to student
-        if (res) {
+        if (res) { console.log(res.data, students)
             const courseData = res.data.filter(element => element.courseGroup.name === course)
-            const courseStudentsData = courseData[0].courseGroup.students;
+            const courseStudentsData = students;
             courseStudentsData.forEach(element => {
                 const firstTerm = courseData.find(el => el.examDateType === "FIRST" && element.id === el.assignedUser.id);
                 const secondTerm = courseData.find(el => el.examDateType === "SECOND" && element.id === el.assignedUser.id);
