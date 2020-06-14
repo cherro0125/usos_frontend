@@ -14,12 +14,28 @@
         class="elevation-1"
       >
         <template v-slot:item.firstTerm="{item}">
-          <p v-if="!edit">{{item.firstTerm}}</p>
-          <v-select v-model="item.firstTerm" :items="grades" v-else></v-select>
+          <v-row>
+            <p class="mt-4" v-if="!edit">{{item.firstTerm}}</p>
+            <v-select v-model="item.firstTerm" :items="grades" v-else></v-select>
+            <v-icon
+              v-if="item.firstTerm && !edit"
+              class="ml-4"
+              small
+              @click="deleteGrade(item)"
+            >mdi-delete</v-icon>
+          </v-row>
         </template>
         <template v-slot:item.secondTerm="{item}">
-          <p v-if="!edit">{{item.secondTerm}}</p>
-          <v-select v-model="item.secondTerm" :items="grades" v-else></v-select>
+          <v-row>
+            <p class="mt-4" v-if="!edit">{{item.secondTerm}}</p>
+            <v-select v-model="item.secondTerm" :items="grades" v-else></v-select>
+            <v-icon
+              v-if="item.secondTerm && !edit"
+              class="ml-4"
+              small
+              @click="deleteGrade(item)"
+            >mdi-delete</v-icon>
+          </v-row>
         </template>
       </v-data-table>
       <v-card-actions class="justify-center">
@@ -40,8 +56,8 @@ export default {
         { text: "Index", value: "id" },
         { text: "Name", value: "firstName" },
         { text: "Surname", value: "lastName" },
-        { text: "I Term", value: "firstTerm", width: "250" },
-        { text: "II Term", value: "secondTerm", width: "250" }
+        { text: "I Term", value: "firstTerm", width: "300" },
+        { text: "II Term", value: "secondTerm", width: "300" }
       ],
       students: [],
       studentsConst: [],
@@ -102,7 +118,7 @@ export default {
               return this.addGrade(params);
             })
           );
-        
+
         await this.getCourseData();
         this.retrieveCourseData();
 
@@ -122,6 +138,9 @@ export default {
       this.studentsConst = JSON.parse(JSON.stringify(this.students));
       this.courseId = course.id;
       this.edit = false;
+    },
+    deleteGrade(item) {
+      console.log(item);
     }
   },
   async created() {
