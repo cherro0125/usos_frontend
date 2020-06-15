@@ -4,7 +4,8 @@ import auth from './modules/auth';
 import lecturer from './modules/lecturer';
 import user from './modules/user';
 import student from './modules/student';
-import news from './modules/news'
+import news from './modules/news';
+import manageGroups from './modules/manageGroups';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
       lecturer,
       user,
       student,
-      news
+      news,
+      manageGroups
     }
   });

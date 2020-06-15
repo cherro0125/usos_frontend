@@ -143,7 +143,7 @@ export default {
         {
           title: "manage groups",
           icon: "supervised_user_circle",
-          route: ""
+          route: "/dean/groups"
         },
         {
           title: "scholarships",

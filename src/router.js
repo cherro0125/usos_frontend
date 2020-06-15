@@ -13,6 +13,7 @@ import Accounts from './components/Rector/UserAccounts/Accounts';
 import AccountCreation from './components/Rector/UserAccounts/AccountCreation/AccountCreation';
 import GradesTable from './components/Lecturer/Grades/GradesTable/GradesTable';
 import LecturerGradesPanel from './components/Lecturer/Grades/LecturerGradesPanel';
+import Groups from './components/Dean/ManageGroups/Groups';
 
 Vue.use(Router);
 
@@ -73,6 +74,11 @@ const router = new Router({
             path: '/lecturer/grades/:course',
             component: GradesTable,
             meta: { role: 'lecturer' }
+        },
+        {
+            path: '/dean/groups',
+            component: Groups,
+            meta: { role: 'dean' }
         },
     ]
 });
