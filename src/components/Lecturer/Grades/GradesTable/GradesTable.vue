@@ -21,7 +21,7 @@
               v-if="item.firstTerm && !edit"
               class="ml-4"
               small
-              @click="deleteGrade(item)"
+              @click="deleteGrade(item, 'firstTerm')"
             >mdi-delete</v-icon>
           </v-row>
         </template>
@@ -33,7 +33,7 @@
               v-if="item.secondTerm && !edit"
               class="ml-4"
               small
-              @click="deleteGrade(item)"
+              @click="deleteGrade(item, 'secondTerm')"
             >mdi-delete</v-icon>
           </v-row>
         </template>
@@ -73,7 +73,8 @@ export default {
       "getCourseData",
       "addGrade",
       "getGradesValues",
-      "getCourseStudentsData"
+      "getCourseStudentsData",
+      "removeGrade"
     ]),
     async saveGrades() {
       const firstTermStudents = [],
@@ -119,8 +120,7 @@ export default {
             })
           );
 
-        await this.getCourseData();
-        this.retrieveCourseData();
+        await this.getData();
 
         this.$notify({
           group: "foo",
@@ -139,22 +139,34 @@ export default {
       this.courseId = course.id;
       this.edit = false;
     },
-    deleteGrade(item) {
-      console.log(item);
-    }
-  },
-  async created() {
-    await this.getCourseData();
-    await Promise.all([
-      this.getGradesValues(),
-      this.getCourseStudentsData({
+    async deleteGrade(item, term) {
+      const id = term === "firstTerm" ? item.firstTermId : item.secondTermId;
+      const res = await this.removeGrade(id);
+
+      this.$notify({
+        group: "foo",
+        type: res ? "success" : "error",
+        title: res
+          ? "grade successfully deleted"
+          : "error during grade deletion"
+      });
+
+      await this.getData();
+    },
+    async getData() {
+      await this.getCourseData();
+      await this.getCourseStudentsData({
         id: localStorage.getItem("userId"),
         course: this.$route.params.course,
         students: this.courseData[0].students
-      })
-    ]);
-    this.retrieveCourseData();
+      });
+      this.retrieveCourseData();
+    }
+  },
+  async created() {
+    await this.getGradesValues();
     this.grades = this.gradesValues;
+    await this.getData();
   }
 };
 </script>
