@@ -5,7 +5,6 @@ import store from './store/store';
 import Grades from './components/Student/Grades/Grades';
 import Login from './components/Login/Login';
 import Scholarships from './components/Student/Scholarships/Scholarships';
-import Payments from "./components/Student/Payments/Payments";
 import Applications from "./components/Student/Applications/Applications";
 import News from "./components/News/News";
 import ApplicationFrom from './components/Student/Applications/ApplicationForm/ApplicationForm';
@@ -14,6 +13,7 @@ import AccountCreation from './components/Rector/UserAccounts/AccountCreation/Ac
 import GradesTable from './components/Lecturer/Grades/GradesTable/GradesTable';
 import LecturerGradesPanel from './components/Lecturer/Grades/LecturerGradesPanel';
 import Groups from './components/Dean/ManageGroups/Groups';
+import Payments from "./components/Payments/Payments";
 
 Vue.use(Router);
 
@@ -66,6 +66,11 @@ const router = new Router({
             meta: { role: 'rector' }
         },
         {
+            path: '/rector/payments',
+            component: Payments,
+            meta: { role: 'dean' }
+        },
+        {
             path: '/lecturer/grades',
             component: LecturerGradesPanel,
             meta: { role: 'lecturer' }
@@ -80,6 +85,11 @@ const router = new Router({
             component: Groups,
             meta: { role: 'dean' }
         },
+        {
+            path: '/dean/payments',
+            component: Payments,
+            meta: { role: 'dean' }
+        }       
     ]
 });
 
