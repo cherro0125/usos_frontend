@@ -13,7 +13,7 @@ const mutations = {
 };
 
 const actions = {
-    async getPaymetnsByPayerId({ commit }, id) {
+    async getPaymentsByPayerId({ commit }, id) {
         const { res, err } = await promiseWrapper(axios.get(`/payment/${id}`));
 
         if (res)
@@ -23,7 +23,7 @@ const actions = {
     },
     async getAllPayments({ commit }) {
         const { res, err } = await promiseWrapper(axios.get(`/payment/all`));
-
+        console.log(res.data)
         if (res)
             commit('setPayments', res.data);
         else
