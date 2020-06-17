@@ -1,17 +1,25 @@
 <template>
   <v-container>
-    <h2 class="pl-10">Payments</h2>
-    <div class="pa-10">
-      <span class="mr-4">University bank account number:</span> 
-      <span>1111 12121 12121 12212 2132</span>
-    </div>
+    <h2 class="ml-4 mb-8">Payments</h2>
+    <v-data-table
+      hide-default-footer
+      :headers="headers"
+      class="elevation-1"
+    ></v-data-table>
   </v-container>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      headers: [
+        { text: "type", value: "id" },
+        { text: "payable to", value: "firstName" },
+        { text: "details", value: "lastName" },
+        { text: "status", value: "firstTerm", width: "300" }
+      ]
+    }
   }
 };
 </script>
