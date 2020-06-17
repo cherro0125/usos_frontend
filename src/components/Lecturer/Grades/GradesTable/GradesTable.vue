@@ -21,7 +21,7 @@
               v-if="item.firstTerm && !edit"
               class="ml-4"
               small
-              @click="deleteGrade(item, 'firstTerm')"
+              @click="deleteGradeRequest(item, 'firstTerm')"
             >mdi-delete</v-icon>
           </v-row>
         </template>
@@ -33,7 +33,7 @@
               v-if="item.secondTerm && !edit"
               class="ml-4"
               small
-              @click="deleteGrade(item, 'secondTerm')"
+              @click="deleteGradeRequest(item, 'secondTerm')"
             >mdi-delete</v-icon>
           </v-row>
         </template>
@@ -43,6 +43,17 @@
         <v-btn @click="saveGrades">save</v-btn>
       </v-card-actions>
     </v-card>
+    <v-row justify="center">
+      <v-dialog v-model="confirmDeleteModal" persistent max-width="800">
+        <v-card class="pa-12">
+          <v-card-title class="headline justify-center">Are you sure want to delete this grade?</v-card-title>
+          <v-card-actions class="justify-center">
+            <v-btn text @click="this.confirmDeleteModal = false">Cancel</v-btn>
+            <v-btn text @click="deleteGrade()">Delete</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-container>
 </template>
 
@@ -64,7 +75,9 @@ export default {
       edit: false,
       grades: [],
       courseFullName: "",
-      courseId: ""
+      courseId: "",
+      gradeToDelete: "",
+      confirmDeleteModal: false
     };
   },
   computed: mapGetters(["courseData", "gradesValues", "courseStudentsData"]),
@@ -139,10 +152,13 @@ export default {
       this.courseId = course.id;
       this.edit = false;
     },
-    async deleteGrade(item, term) {
+    deleteGradeRequest(item, term) {
       const id = term === "firstTerm" ? item.firstTermId : item.secondTermId;
-      const res = await this.removeGrade(id);
-
+      this.gradeToDelete = id;
+      this.confirmDeleteModal = true;
+    },
+    async deleteGrade() {
+      const res = await this.removeGrade(this.gradeToDelete);
       this.$notify({
         group: "foo",
         type: res ? "success" : "error",
@@ -152,6 +168,7 @@ export default {
       });
 
       await this.getData();
+      this.confirmDeleteModal = false;
     },
     async getData() {
       await this.getCourseData();
