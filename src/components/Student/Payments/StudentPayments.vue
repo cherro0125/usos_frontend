@@ -14,13 +14,13 @@ export default {
         { text: "type", value: "purposeType" },
         { text: "payable to", value: "payableTo" },
         { text: "description", value: "details" },
-        { text: "status", value: "status", width: "300" }
+        { text: "status", value: "status" }
       ]
     };
   },
   computed: mapGetters(["payments"]),
   methods: {
-    ...mapActions(["getPaymentsByPayerId", "getAllPayments"])
+    ...mapActions(["getPaymentsByPayerId"])
   },
   async created() {
     const id = localStorage.getItem("userId");

@@ -14,6 +14,7 @@ import GradesTable from './components/Lecturer/Grades/GradesTable/GradesTable';
 import LecturerGradesPanel from './components/Lecturer/Grades/LecturerGradesPanel';
 import Groups from './components/Dean/ManageGroups/Groups';
 import StudentPayments from "./components/Student/Payments/StudentPayments";
+import Payments from "./components/Payments/Payments";
 
 Vue.use(Router);
 
@@ -65,11 +66,11 @@ const router = new Router({
             component: AccountCreation,
             meta: { role: 'rector' }
         },
-        // {
-        //     path: '/rector/payments',
-        //     component: Payments,
-        //     meta: { role: 'dean' }
-        // },
+        {
+            path: '/rector/payments',
+            component: Payments,
+            meta: { role: 'rector' }
+        },
         {
             path: '/lecturer/grades',
             component: LecturerGradesPanel,
@@ -85,11 +86,11 @@ const router = new Router({
             component: Groups,
             meta: { role: 'dean' }
         },
-        // {
-        //     path: '/dean/payments',
-        //     component: Payments,
-        //     meta: { role: 'dean' }
-        // }       
+        {
+            path: '/dean/payments',
+            component: Payments,
+            meta: { role: 'dean' }
+        }       
     ]
 });
 

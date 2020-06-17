@@ -100,7 +100,7 @@ export default {
           title: "syllabus",
           icon: "notes",
           route: ""
-        },
+        }
       ],
       adminItems: [
         {
@@ -116,7 +116,7 @@ export default {
         {
           title: "payments",
           icon: "attach_money",
-          route: ""
+          route: "/rector/payments"
         },
         {
           title: "manage subjects",
@@ -150,6 +150,11 @@ export default {
           icon: "school",
           route: ""
         },
+        {
+          title: "payments",
+          icon: "attach_money",
+          route: "/dean/payments"
+        }
       ],
       studentItems: [
         {
@@ -179,7 +184,7 @@ export default {
         }
       ],
       role: "",
-      username: ''
+      username: ""
     };
   },
   computed: {
