@@ -28,6 +28,16 @@ const actions = {
             commit('setPayments', res.data);
         else
             console.log(err);
+    },
+    async makePayment({ commit }, id) {
+        const { res, err } = await promiseWrapper(axios.get(`/payment/pay/${id}`));
+        
+        if(res) {
+            const { redirectUrl } = res.data;
+            window.location.href = redirectUrl;
+        }
+        else 
+            console.log(err)
     }
 };
 

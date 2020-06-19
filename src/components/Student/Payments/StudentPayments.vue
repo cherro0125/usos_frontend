@@ -3,10 +3,18 @@
     <h2 class="ml-4 mb-8">Payments</h2>
     <v-data-table hide-default-footer :headers="headers" :items="payments" class="elevation-1">
       <template v-slot:item.actions="{ item }">
-        <v-btn v-if="item.status === 'NEW' || item.status === 'CREATED'" small class="mr-2" @click="pay(item.id)">pay</v-btn>
-        <hr class="line" v-else>
+        <v-btn
+          v-if="item.status === 'NEW' || item.status === 'CREATED'"
+          small
+          class="mr-2"
+          @click="pay(item.id)"
+        >pay</v-btn>
+        <hr class="line" v-else />
       </template>
     </v-data-table>
+    <v-overlay absolute :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -21,14 +29,17 @@ export default {
         { text: "description", value: "details" },
         { text: "status", value: "status" },
         { text: "actions", value: "actions" }
-      ]
+      ],
+      overlay: false
     };
   },
   computed: mapGetters(["payments"]),
   methods: {
-    ...mapActions(["getPaymentsByPayerId"]),
-    async pay(item) {
-      console.log(item)
+    ...mapActions(["getPaymentsByPayerId", "makePayment"]),
+    async pay(id) {
+      this.overlay = true;
+      await this.makePayment(id);
+      this.overlay = false;
     }
   },
   async created() {
@@ -39,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
- .line {
-   width: 55px;
- }
+.line {
+  width: 55px;
+}
 </style>
