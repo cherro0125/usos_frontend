@@ -43,7 +43,7 @@
             <p class="mb-5">{{item.description}}</p>
             
             <template>
-            <v-expansion-panels accordion >
+              <v-expansion-panels accordion >
                   <v-toolbar flat class="pa-2" >
                     Defined groups
                   </v-toolbar>
@@ -72,45 +72,45 @@
                       <v-expansion-panel-content>
                         
 
-<template>
-            <v-expansion-panels accordion >
-                  <v-toolbar flat class="pa-2" >
-                    Assigned students
-                  </v-toolbar>
-                  <v-expansion-panel :disabled="true">
-                      <v-expansion-panel-header>
-                        <v-col cols="3">
-                          username
-                        </v-col>
-                        <v-col cols="3">
-                          first name
-                        </v-col>
-                        <v-col cols="3">
-                          last name
-                        </v-col>
-                      </v-expansion-panel-header>
-                    </v-expansion-panel>
-                    <v-expansion-panel
-                      v-for="(item3,k) in item2.students"
-                      :key="k"
-                    >
-                      <v-expansion-panel-header>
-                        <v-col cols="3">
-                          {{item3.username}}
-                        </v-col>
-                        <v-col cols="3">
-                          {{item3.firstName}}
-                        </v-col>
-                        <v-col cols="3">
-                          {{item3.lastName}}
-                        </v-col>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content>
-                        
-                      </v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-            </template>
+                        <template>
+                          <v-expansion-panels accordion >
+                              <v-toolbar flat class="pa-2" >
+                                Assigned students
+                              </v-toolbar>
+                              <v-expansion-panel :disabled="true">
+                                  <v-expansion-panel-header>
+                                    <v-col cols="3">
+                                      username
+                                    </v-col>
+                                    <v-col cols="3">
+                                      first name
+                                    </v-col>
+                                    <v-col cols="3">
+                                      last name
+                                    </v-col>
+                                  </v-expansion-panel-header>
+                                </v-expansion-panel>
+                                <v-expansion-panel
+                                  v-for="(item3,k) in item2.students"
+                                  :key="k" :disabled="true"
+                                >
+                                  <v-expansion-panel-header>
+                                    <v-col cols="3">
+                                      {{item3.username}}
+                                    </v-col>
+                                    <v-col cols="3">
+                                      {{item3.firstName}}
+                                    </v-col>
+                                    <v-col cols="3">
+                                      {{item3.lastName}}
+                                    </v-col>
+                                  </v-expansion-panel-header>
+                                  <v-expansion-panel-content>
+                                    
+                                  </v-expansion-panel-content>
+                                </v-expansion-panel>
+                              </v-expansion-panels>
+                        </template>
 
 
                       </v-expansion-panel-content>
@@ -143,16 +143,14 @@ export default {
     await this.getDegreeCourses();
   },
   methods: {
-    ...mapActions(["getDegreeCourses","getDefinedGroups"])
+    ...mapActions(["getDegreeCourses","getDefinedGroups","clearDefinedGroups"])
   },
   watch: {
     panelIndex: function() {
       if(this.panelIndex!=undefined){
-        //console.log("watch panelIndex id: " + this.degreeCourses[this.panelIndex-1].id) 
+        this.clearDefinedGroups();
         this.getDefinedGroups(this.degreeCourses[this.panelIndex-1].id);
-      }
-      
-    
+      } 
   }
 }
 };

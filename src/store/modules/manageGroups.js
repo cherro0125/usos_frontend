@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import promiseWrapper from '../../utils/promiseWrapper';
+import Vue from 'vue';
 
 const state = {
     degreeCourses: [],
@@ -23,14 +24,25 @@ const actions = {
         if (res)
             commit('setDegreeCourses', res.data)
         else
-            console.log(err);
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection lost"
+            })
     },
     async getDefinedGroups({ commit },id) {
         const { res, err } = await promiseWrapper(axios.get(`/definedGroups/${id}`));
         if (res)
             commit('setDefinedGroups', res.data)
         else
-            console.log(err);
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection lost"
+            })
+    },
+    async clearDefinedGroups({ commit }) {
+        commit('setDefinedGroups', "")
     }
 };
 
