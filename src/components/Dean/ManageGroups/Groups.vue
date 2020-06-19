@@ -1,9 +1,16 @@
 <template>
   <v-container>
     <h2 class="ml-2 mb-5">Group manager</h2>
+    
     <v-expansion-panels accordion v-model="panelIndex">
       <v-toolbar flat class="pa-2" >
         Degree Courses
+        <v-spacer></v-spacer>
+      <v-btn
+        color="primary mr-5"
+        dark
+        @click.stop="showAddDegreeCourse = true"
+      >Add course</v-btn>
       </v-toolbar>
       <v-expansion-panel :disabled="true">
           <v-expansion-panel-header>
@@ -46,6 +53,12 @@
               <v-expansion-panels accordion >
                   <v-toolbar flat class="pa-2" >
                     Defined groups
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="primary mr-5"
+                      dark
+                      @click.stop="showAddDefinedGroup = true"
+                    >Add group in this course</v-btn>
                   </v-toolbar>
                   <v-expansion-panel :disabled="true">
                       <v-expansion-panel-header>
@@ -121,10 +134,20 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+      <AddDegreeCourse
+      :showAddDegreeCourse.sync="showAddDegreeCourse"
+      @addDegreeCourse="addDegreeCourse"
+    ></AddDegreeCourse>
+    <AddDefinedGroup
+      :showAddDefinedGroup.sync="showAddDefinedGroup"
+      @addDefinedGroup="addDefinedGroup"
+    ></AddDefinedGroup>
   </v-container>
 </template>
 
 <script>
+import AddDegreeCourse from "./AddDialogs/AddDegreeCourse";
+import AddDefinedGroup from "./AddDialogs/AddDefinedGroup";
 import { mapGetters, mapActions } from "vuex";
 /* eslint-disable */
 export default {
@@ -132,10 +155,15 @@ export default {
     return {
       dialog: false,
       deleteDialog: false,
-      panelIndex: -1
+      panelIndex: -1,
+      showAddDegreeCourse: false,
+      showAddDefinedGroup: false
     };
   },
-
+  components: {
+    AddDegreeCourse,
+    AddDefinedGroup
+  },
   computed: {
     ...mapGetters(["degreeCourses","definedGroups"])
   },
@@ -143,7 +171,14 @@ export default {
     await this.getDegreeCourses();
   },
   methods: {
-    ...mapActions(["getDegreeCourses","getDefinedGroups","clearDefinedGroups"])
+    ...mapActions(["getDegreeCourses","getDefinedGroups","clearDefinedGroups","addDegreeCourses","addDefinedGroups"]),
+    async addDegreeCourse(data) {
+      await this.addDegreeCourses(data);
+    },
+    async addDefinedGroup(data) {
+      data.degreeCourseId=this.degreeCourses[this.panelIndex-1].id;
+      await this.addDefinedGroups(data);
+    }
   },
   watch: {
     panelIndex: function() {
