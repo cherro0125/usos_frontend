@@ -10,12 +10,6 @@
           <v-icon class="ml-2">logout</v-icon>
         </v-btn>
       </v-row>
-      <v-row v-else justify="end">
-        <v-btn class="ml-3" to="/login">
-          <span>Login</span>
-          <v-icon class="ml-2">input</v-icon>
-        </v-btn>
-      </v-row>
     </v-app-bar>
     <NavigationMenu v-if="isLoggedIn" :drawer.sync="drawer"></NavigationMenu>
   </v-container>
