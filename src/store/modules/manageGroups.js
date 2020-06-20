@@ -6,7 +6,9 @@ import Vue from 'vue';
 const state = {
     degreeCourses: [],
     definedGroups: [],
-    degreeTypes: []
+    degreeTypes: [],
+    allDefinedGroups: [],
+    students: []
 };
 
 const mutations = {
@@ -18,6 +20,12 @@ const mutations = {
     },
     setDegreeTypes(state,payload){
         state.degreeTypes = payload;
+    },
+    setAllDefinedGroups(state,payload){
+        state.allDefinedGroups = payload;
+    },
+    setStudents(state,payload){
+        state.students = payload;
     }
 };
 
@@ -54,6 +62,20 @@ const actions = {
             
 
     },
+    async addStudentsToGroup({ dispatch }, data) {
+        const { res, err } = await promiseWrapper(axios.post('/definedGroups/assignStudents', data));
+        console.log(data);
+        if (res)
+            dispatch('getDefinedGroups',data.degreeCourseId);
+        else{
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection error"
+            })
+            console.log(err);
+        }
+    },
     async getDegreeCourses({ commit }) {
         const { res, err } = await promiseWrapper(axios.get('/degreeCourses/all'));
 
@@ -66,10 +88,33 @@ const actions = {
                 title: "Connection lost"
             })
     },
+    async getStudents({ commit }) {
+        const { res, err } = await promiseWrapper(axios.get('/user/STUDENT/all'));
+
+        if (res)
+            commit('setStudents', res.data)
+        else
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection lost"
+            })
+    },
     async getDefinedGroups({ commit },id) {
         const { res, err } = await promiseWrapper(axios.get(`/definedGroups/${id}`));
         if (res)
             commit('setDefinedGroups', res.data)
+        else
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection lost"
+            })
+    },
+    async getAllDefinedGroups({ commit }) {
+        const { res, err } = await promiseWrapper(axios.get(`/definedGroups/all`));
+        if (res)
+            commit('setAllDefinedGroups', res.data)
         else
             Vue.notify({
                 group: "foo",
@@ -92,7 +137,9 @@ const actions = {
 const getters = {
     degreeCourses: state => state.degreeCourses,
     definedGroups: state => state.definedGroups,
-    degreeTypes: state => state.degreeTypes
+    degreeTypes: state => state.degreeTypes,
+    allDefinedGroups: state => state.allDefinedGroups,
+    students: state => state.students
 };
 
 export default {
