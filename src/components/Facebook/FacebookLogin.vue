@@ -1,17 +1,40 @@
 <template>
-    <div>
-        <v-btn @click="logInWithFacebook">Link Facebook to account</v-btn>
-    </div>
+    <v-btn :text="eventToDo !== 'LOGIN'" @click="logInWithFacebook">{{labelTxt}}</v-btn>
 </template>
 <script>
+import {mapActions,mapGetters} from "vuex";
+
 export default {
-    name:"FacebookLogin",
+    name: "FacebookLogin",
+    props: ["labelTxt", "eventToDo","loginHandle"],
     methods: {
+        ...mapActions(['linkToFacebook', 'loginUsingFacebook']),
         async logInWithFacebook() {
-            window.FB.login(function(response) {
+            await window.FB.login((response) => {
                 if (response.authResponse) {
-                    console.log(response);
-                    //Send request to endpoint with access_token and user id
+
+                    let usrId = localStorage.getItem('userId');
+                    if (this.eventToDo === 'LINK' && usrId !== undefined) {
+
+                        this.linkToFacebook({
+                            facebookUserId: response.authResponse.userID,
+                            accessToken: response.authResponse.accessToken,
+                            userId: usrId
+                        });
+                    }
+
+
+                    if (this.eventToDo === "LOGIN") {
+                         this.loginUsingFacebook({
+                            facebookUserId: response.authResponse.userID,
+                            accessToken: response.authResponse.accessToken
+                        }).then(() => {
+                             this.$emit("loginHandle");
+                         });
+
+                    }
+
+
                 } else {
                     alert("User cancelled login or did not fully authorize.");
                 }
@@ -19,7 +42,7 @@ export default {
             return false;
         },
         async initFacebook() {
-            window.fbAsyncInit = function() {
+            window.fbAsyncInit = () => {
                 window.FB.init({
                     appId: "1102872210113542",
                     cookie: false,
@@ -28,7 +51,7 @@ export default {
             };
         },
         async loadFacebookSDK(d, s, id) {
-            var js,
+            let js,
                     fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
                 return;
@@ -39,7 +62,8 @@ export default {
             fjs.parentNode.insertBefore(js, fjs);
         }
     },
-    async mounted(){
+    computed: mapGetters(["isLoggedIn"]),
+    async mounted() {
         await this.loadFacebookSDK(document, "script", "facebook-jssdk");
         await this.initFacebook();
     }
