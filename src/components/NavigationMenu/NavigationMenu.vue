@@ -118,16 +118,16 @@ export default {
           icon: "attach_money",
           route: "/rector/payments"
         },
-        {
-          title: "manage subjects",
-          icon: "subject",
-          route: ""
-        },
-        {
-          title: "scholarship applications",
-          icon: "school",
-          route: ""
-        }
+        // {
+        //   title: "manage subjects",
+        //   icon: "subject",
+        //   route: ""
+        // },
+        // {
+        //   title: "scholarship applications",
+        //   icon: "school",
+        //   route: ""
+        // }
       ],
       deanItems: [
         {
