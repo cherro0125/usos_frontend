@@ -91,12 +91,7 @@ const router = new Router({
             path: '/dean/payments',
             component: Payments,
             meta: { role: 'dean' }
-        },
-        {
-            path: '/student/facebook',
-            component: FacebookLogin,
-            meta: { role: 'student' }
-        },
+        }
     ]
 });
 
