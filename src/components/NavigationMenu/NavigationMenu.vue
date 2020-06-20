@@ -96,11 +96,11 @@ export default {
           icon: "grade",
           route: "/lecturer/grades"
         },
-        {
-          title: "syllabus",
-          icon: "notes",
-          route: ""
-        }
+        // {
+        //   title: "syllabus",
+        //   icon: "notes",
+        //   route: ""
+        // }
       ],
       adminItems: [
         {
