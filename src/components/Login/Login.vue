@@ -25,7 +25,7 @@
                             <v-card-actions class="justify-center">
                                 <v-btn type="submit">Log In</v-btn>
                                 <FacebookLogin label-txt="LOGIN BY FACEBOOK"
-                                               event-to-do="LOGIN" login-handle="loginHandleFunc"/>
+                                               event-to-do="LOGIN" @loginHandle="loginHandleFunc"/>
                             </v-card-actions>
                         </v-card>
                     </v-form>

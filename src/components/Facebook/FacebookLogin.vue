@@ -6,7 +6,7 @@ import {mapActions,mapGetters} from "vuex";
 
 export default {
     name: "FacebookLogin",
-    props: ["labelTxt", "eventToDo","loginHandle"],
+    props: ["labelTxt", "eventToDo"],
     methods: {
         ...mapActions(['linkToFacebook', 'loginUsingFacebook']),
         async logInWithFacebook() {
