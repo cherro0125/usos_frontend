@@ -135,21 +135,21 @@ export default {
           icon: "announcement",
           route: "/news"
         },
-        {
-          title: "manage subjects",
-          icon: "subject",
-          route: ""
-        },
+        // {
+        //   title: "manage subjects",
+        //   icon: "subject",
+        //   route: ""
+        // },
         {
           title: "manage groups",
           icon: "supervised_user_circle",
           route: "/dean/groups"
         },
-        {
-          title: "scholarships",
-          icon: "school",
-          route: ""
-        },
+        // {
+        //   title: "scholarships",
+        //   icon: "school",
+        //   route: ""
+        // },
         {
           title: "payments",
           icon: "attach_money",
