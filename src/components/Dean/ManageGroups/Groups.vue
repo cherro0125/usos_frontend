@@ -10,6 +10,7 @@
       </v-toolbar>
       <v-expansion-panel :disabled="true">
         <v-expansion-panel-header>
+          <v-col cols="1">delete</v-col>
           <v-col cols="3">name</v-col>
           <v-col cols="2">fulltime</v-col>
           <v-col cols="2">number of semesters</v-col>
@@ -18,6 +19,7 @@
       </v-expansion-panel>
       <v-expansion-panel v-for="(item,i) in degreeCourses" :key="i">
         <v-expansion-panel-header>
+          <v-col cols="1"><v-btn icon color="red" @click.native.stop @click="deleteDegreeCourseRequest(item.id)"><v-icon>mdi-delete</v-icon></v-btn></v-col>
           <v-col cols="3">{{item.name}}</v-col>
           <v-col cols="2">{{item.isFullTimeStudies}}</v-col>
           <v-col cols="2">{{item.numberOfSemesters}}</v-col>
@@ -39,14 +41,17 @@
               </v-toolbar>
               <v-expansion-panel :disabled="true">
                 <v-expansion-panel-header>
+                  <v-col cols="1">delete</v-col>
                   <v-col cols="3">name</v-col>
                   <v-col cols="2">description</v-col>
                 </v-expansion-panel-header>
               </v-expansion-panel>
               <v-expansion-panel v-for="(item2,j) in definedGroups" :key="j">
                 <v-expansion-panel-header>
+                  <v-col cols="1"><v-btn icon color="red" @click.native.stop @click="deleteDefinedGroupRequest(item2.id)"><v-icon>mdi-delete</v-icon></v-btn></v-col>
                   <v-col cols="3">{{item2.name}}</v-col>
                   <v-col cols="2">{{item2.description}}</v-col>
+                  
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <template>
@@ -100,6 +105,14 @@
       :showAddStudentToGroup.sync="showAddStudentToGroup"
       @addStudentToGroup="addStudentToGroup"
     ></AddStudentToGroup>
+    <DeleteDegreeCourse
+      :showDeleteDegreeCourse.sync="showDeleteDegreeCourse"
+      @deleteDegreeCourse="deleteDegreeCourse"
+    ></DeleteDegreeCourse>
+    <DeleteDefinedGroup
+      :showDeleteDefinedGroup.sync="showDeleteDefinedGroup"
+      @deleteDefinedGroup="deleteDefinedGroup"
+    ></DeleteDefinedGroup>
   </v-container>
 </template>
 
@@ -107,6 +120,8 @@
 import AddDegreeCourse from "./AddDialogs/AddDegreeCourse";
 import AddDefinedGroup from "./AddDialogs/AddDefinedGroup";
 import AddStudentToGroup from "./AddDialogs/AddStudentToGroup";
+import DeleteDegreeCourse from "./DeleteDialogs/DeleteDegreeCourse";
+import DeleteDefinedGroup from "./DeleteDialogs/DeleteDefinedGroup";
 import { mapGetters, mapActions } from "vuex";
 /* eslint-disable */
 export default {
@@ -118,13 +133,20 @@ export default {
       groupIndex: -1,
       showAddDegreeCourse: false,
       showAddDefinedGroup: false,
-      showAddStudentToGroup: false
+      showAddStudentToGroup: false,
+      showDeleteDegreeCourse: false,
+      showDeleteDefinedGroup: false,
+      courseToDelete: "",
+      groupToDelete: "",
+      stutendToDelete: ""
     };
   },
   components: {
     AddDegreeCourse,
     AddDefinedGroup,
-    AddStudentToGroup
+    AddStudentToGroup,
+    DeleteDegreeCourse,
+    DeleteDefinedGroup
   },
   computed: {
     ...mapGetters(["degreeCourses", "definedGroups"])
@@ -139,7 +161,9 @@ export default {
       "clearDefinedGroups",
       "addDegreeCourses",
       "addDefinedGroups",
-      "addStudentsToGroup"
+      "addStudentsToGroup",
+      "deleteDegreeCourses",
+      "deleteGroups"
     ]),
     async addDegreeCourse(data) {
       await this.addDegreeCourses(data);
@@ -150,8 +174,26 @@ export default {
     },
     async addStudentToGroup(data) {
       data.degreeCourseId = this.degreeCourses[this.panelIndex - 1].id;
-      data.definedGroupId = this.definedGroups[this.groupIndex -1].id;
+      data.definedGroupId = this.definedGroups[this.groupIndex - 1].id;
       await this.addStudentsToGroup(data);
+    },
+    deleteDegreeCourseRequest(id){
+      this.courseToDelete=id;
+      this.showDeleteDegreeCourse=true;
+    },
+    deleteDefinedGroupRequest(id){
+      this.groupToDelete=id;
+      this.showDeleteDefinedGroup=true;
+    },
+    async deleteDegreeCourse(){
+      await this.deleteDegreeCourses(this.courseToDelete);
+    },
+    async deleteDefinedGroup() {
+      const data={
+        id:this.groupToDelete,
+        refreshDegreeCourseId:this.degreeCourses[this.panelIndex - 1].id
+      };
+      await this.deleteGroups(data);
     }
   },
   watch: {

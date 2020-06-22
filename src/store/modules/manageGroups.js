@@ -131,6 +131,38 @@ const actions = {
     },
     async clearDefinedGroups({ commit }) {
         commit('setDefinedGroups', "")
+    },
+    async deleteDegreeCourses({dispatch}, id){
+        const { res, err } = await promiseWrapper(axios.delete(`degreeCourses/${id}/delete`));
+
+        if (res)
+            dispatch('getDegreeCourses');
+        else{
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection error"
+            })
+            console.log(err);
+        }
+    },
+    async deleteGroups({dispatch}, data){
+        const { res, err } = await promiseWrapper(axios.delete(`definedGroups/${data.id}/delete`));
+        if (res)
+            dispatch('getDefinedGroups',data.refreshDegreeCourseId);
+        else{
+            Vue.notify({
+                group: "foo",
+                type: "error",
+                title: "Connection error"
+            })
+            console.log(err);
+        }
+    },
+    async removeStudentsFromGroups({commit}, id, studentId){
+        const { res, err } = await promiseWrapper(axios.delete(`definedGroups/${id}/removeStudent/${studentId}`));
+
+        return res ? true : false;
     }
 };
 
