@@ -55,6 +55,7 @@ export default {
       const data = {
         studentIds: this.selected.map(x=>x.id)
       };
+      this.selected=[];
       console.log(data.studentIds)
       this.$emit("addStudentToGroup", data);
       this.$emit("update:showAddStudentToGroup", false);

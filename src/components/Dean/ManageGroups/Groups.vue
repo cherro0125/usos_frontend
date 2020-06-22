@@ -26,7 +26,7 @@
           <v-col cols="2">{{item.finalDegreeType}}</v-col>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <p class="mb-5">{{item.description}}</p>
+          <p class="mb-5"><b>Description:</b> {{item.description}}</p>
 
           <template>
             <v-expansion-panels accordion v-model="groupIndex">
@@ -67,6 +67,7 @@
                       </v-toolbar>
                       <v-expansion-panel :disabled="true">
                         <v-expansion-panel-header>
+                          <v-col cols="1">remove</v-col>
                           <v-col cols="3">username</v-col>
                           <v-col cols="3">first name</v-col>
                           <v-col cols="3">last name</v-col>
@@ -75,9 +76,10 @@
                       <v-expansion-panel
                         v-for="(item3,k) in item2.students"
                         :key="k"
-                        :disabled="true"
+                        :readonly="true"
                       >
-                        <v-expansion-panel-header>
+                        <v-expansion-panel-header :hide-actions="true">
+                          <v-col cols="1"><v-btn icon color="red" @click.native.stop @click="removeStudentFromGroupRequest(item3.id)"><v-icon>mdi-delete</v-icon></v-btn></v-col>
                           <v-col cols="3">{{item3.username}}</v-col>
                           <v-col cols="3">{{item3.firstName}}</v-col>
                           <v-col cols="3">{{item3.lastName}}</v-col>
@@ -113,6 +115,10 @@
       :showDeleteDefinedGroup.sync="showDeleteDefinedGroup"
       @deleteDefinedGroup="deleteDefinedGroup"
     ></DeleteDefinedGroup>
+    <DeleteStudentFromGroup
+      :showRemoveStudentFromGroup.sync="showRemoveStudentFromGroup"
+      @removeStudentFromGroup="removeStudentFromGroup"
+    ></DeleteStudentFromGroup>
   </v-container>
 </template>
 
@@ -122,6 +128,7 @@ import AddDefinedGroup from "./AddDialogs/AddDefinedGroup";
 import AddStudentToGroup from "./AddDialogs/AddStudentToGroup";
 import DeleteDegreeCourse from "./DeleteDialogs/DeleteDegreeCourse";
 import DeleteDefinedGroup from "./DeleteDialogs/DeleteDefinedGroup";
+import DeleteStudentFromGroup from "./DeleteDialogs/DeleteStudentFromGroup";
 import { mapGetters, mapActions } from "vuex";
 /* eslint-disable */
 export default {
@@ -136,9 +143,10 @@ export default {
       showAddStudentToGroup: false,
       showDeleteDegreeCourse: false,
       showDeleteDefinedGroup: false,
+      showRemoveStudentFromGroup: false,
       courseToDelete: "",
       groupToDelete: "",
-      stutendToDelete: ""
+      studentToDelete: ""
     };
   },
   components: {
@@ -146,7 +154,8 @@ export default {
     AddDefinedGroup,
     AddStudentToGroup,
     DeleteDegreeCourse,
-    DeleteDefinedGroup
+    DeleteDefinedGroup,
+    DeleteStudentFromGroup
   },
   computed: {
     ...mapGetters(["degreeCourses", "definedGroups"])
@@ -163,7 +172,8 @@ export default {
       "addDefinedGroups",
       "addStudentsToGroup",
       "deleteDegreeCourses",
-      "deleteGroups"
+      "deleteGroups",
+      "removeStudentsFromGroups"
     ]),
     async addDegreeCourse(data) {
       await this.addDegreeCourses(data);
@@ -185,6 +195,10 @@ export default {
       this.groupToDelete=id;
       this.showDeleteDefinedGroup=true;
     },
+    removeStudentFromGroupRequest(id){
+      this.studentToDelete=id;
+      this.showRemoveStudentFromGroup=true;
+    },
     async deleteDegreeCourse(){
       await this.deleteDegreeCourses(this.courseToDelete);
     },
@@ -194,6 +208,14 @@ export default {
         refreshDegreeCourseId:this.degreeCourses[this.panelIndex - 1].id
       };
       await this.deleteGroups(data);
+    },
+    async removeStudentFromGroup(){
+      const data={
+        id:this.studentToDelete,
+        definedGroupId:this.definedGroups[this.groupIndex - 1].id,
+        degreeCourseId:this.degreeCourses[this.panelIndex - 1].id
+      }
+      await this.removeStudentsFromGroups(data);
     }
   },
   watch: {
