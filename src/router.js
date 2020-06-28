@@ -16,6 +16,8 @@ import Groups from './components/Dean/ManageGroups/Groups';
 import StudentPayments from "./components/Student/Payments/StudentPayments";
 import Payments from "./components/Payments/Payments";
 import FacebookLogin from "./components/Facebook/FacebookLogin";
+import KeysTable from "./components/Porter/KeysTable/KeysTable";
+import ManageRoomKeys from "./components/Porter/ManageRoomKeys";
 
 Vue.use(Router);
 
@@ -91,6 +93,11 @@ const router = new Router({
             path: '/dean/payments',
             component: Payments,
             meta: { role: 'dean' }
+        },
+        {
+            path: "/porter/keys",
+            component: ManageRoomKeys,
+            meta: {role: 'porter'}
         }
     ]
 });
@@ -105,6 +112,7 @@ router.beforeEach((to, from, next) => {
     const studentAccess = to.matched.some(route => route.meta.role === 'student');
     const deanAcess = to.matched.some(route => route.meta.role === 'dean');
     const lecturerAcess = to.matched.some(route => route.meta.role === 'lecturer');
+    const porterAccess = to.matched.some(router => router.meta.role === 'porter');
 
     if (isLoggedIn) {
         if (onlyForLoggedOut)
@@ -117,6 +125,8 @@ router.beforeEach((to, from, next) => {
             else if (deanAcess && role.toLowerCase() === 'dean')
                 next();
             else if (lecturerAcess && role.toLowerCase() === 'lecturer')
+                next();
+            else if (porterAccess && role.toLocaleLowerCase() === 'porter')
                 next();
             else
                 next('news');

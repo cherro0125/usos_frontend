@@ -76,6 +76,22 @@
           </v-list-item-content>
         </v-list-item>
       </div>
+      <div v-if="role === 'PORTER'">
+        <v-list-item
+                class="list-items"
+                v-for="item in porterItems"
+                :key="item.title"
+                link
+                :to="item.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -181,6 +197,18 @@ export default {
           title: "applications",
           icon: "description",
           route: "/student/applications"
+        }
+      ],
+      porterItems: [
+        {
+          title: "news",
+          icon: "announcement",
+          route: "/news"
+        },
+        {
+          title: "keys",
+          icon: "vpn_key",
+          route: "/porter/keys"
         }
       ],
       role: "",
