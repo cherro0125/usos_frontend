@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h2 class="pl-5">RoomKeys</h2>
+        <h2 class="pl-5">All room keys</h2>
         <KeysTable></KeysTable>
     </v-container>
 </template>

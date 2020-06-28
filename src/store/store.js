@@ -7,6 +7,7 @@ import student from './modules/student';
 import news from './modules/news';
 import manageGroups from './modules/manageGroups';
 import payments from './modules/payments';
+import porter from "./modules/porter";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
       student,
       news,
       manageGroups,
-      payments
+      payments,
+      porter
     }
   });

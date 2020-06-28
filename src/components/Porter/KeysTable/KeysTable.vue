@@ -4,7 +4,7 @@
                 hide-default-footer
                 :dark="$vuetify.theme.dark"
                 :headers="headers"
-                :items="rooms"
+                :items="roomKeys"
                 class="elevation-1"
         ></v-data-table>
     </v-container>
@@ -21,12 +21,12 @@
                 ]
             };
         },
-        computed: mapGetters(['roomNumbers']),
+        computed: mapGetters(['roomKeys']),
         async created() {
-            await this.getRoomNumbers(localStorage.getItem("userId"));
+            await this.getAllKeys(/*localStorage.getItem("userId")*/);
         },
         methods: {
-            ...mapActions(["getRoomNumbers"])
+            ...mapActions(["getAllKeys"])
         }
     };
     // export default {
