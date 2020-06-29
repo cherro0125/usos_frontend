@@ -86,14 +86,14 @@
                 keyView: this.$route.params.keyView.replaceAll('_', ' '),
                 keyViews: ['all keys', 'all available keys', 'all given keys'],
                 headersAllKeys: [
-                    {text: "roomNumber", value: "roomNumber"},
+                    {text: "room number", value: "roomNumber"},
                     {text: "owner", value: "owner"},
                 ],
                 headersTakeKeys: [
-                    {text: "roomNumber", value: "roomNumber"}
+                    {text: "room number", value: "roomNumber"}
                 ],
                 headersReturnKeys: [
-                    {text: "roomNumber", value: "roomNumber"},
+                    {text: "room number", value: "roomNumber"},
                     {text: "owner", value: "owner"}
                 ],
                 singleSelect: false,
@@ -113,7 +113,6 @@
                 await this.getAllUsers();
             } else if (keyView === keyViews[2]) {
                 await this.getAllGivenKeys();
-                await this.getAllUsers();
             }
         },
         methods: {
