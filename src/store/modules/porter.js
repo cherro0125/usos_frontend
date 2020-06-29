@@ -19,7 +19,12 @@ const mutations = {
 const actions = {
     async getAllUsers({commit}) {
         const { res, err } = await promiseWrapper(axios.get(`/user/all`));
-        commit('setAllUsers', res.data);
+        if (res) {
+            console.log(res)
+            commit('setAllUsers', res.data);
+        }
+        else
+            console.log(err)
     },
     async getAllKeys({ commit }) {
         const { res, err } = await promiseWrapper(axios.get(`/keys/all`));
