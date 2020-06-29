@@ -3,16 +3,24 @@ import axios from 'axios';
 import promiseWrapper from '../../utils/promiseWrapper';
 
 const state = {
-    roomKeys: []
+    roomKeys: [],
+    allUsers: []
 };
 
 const mutations = {
+    setAllUsers(state, payload) {
+        state.allUsers = payload;
+    },
     setRoomKeys(state, payload) {
         state.roomKeys = payload;
     }
 };
 
 const actions = {
+    async getAllUsers({commit}) {
+        const { res, err } = await promiseWrapper(axios.get(`/user/all`));
+        commit('setAllUsers', res.data);
+    },
     async getAllKeys({ commit }) {
         const { res, err } = await promiseWrapper(axios.get(`/keys/all`));
         if (res) {
@@ -91,11 +99,15 @@ const actions = {
         const { res, err } = await promiseWrapper(axios.delete(`/grade/${id}/delete`));
 
         return res ? true : false;
+    },
+    emptyRoomKeys() {
+        state.roomKeys = []
     }
 };
 
 const getters = {
-    roomKeys: state => state.roomKeys
+    roomKeys: state => state.roomKeys,
+    allUsers: state => state.allUsers
 };
 
 export default {

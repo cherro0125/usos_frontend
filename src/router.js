@@ -98,6 +98,11 @@ const router = new Router({
             path: "/porter/keys",
             component: ManageRoomKeys,
             meta: {role: 'porter'}
+        },
+        {
+            path: '/porter/keys/:keyView',
+            component: KeysTable,
+            meta: {role: 'porter'}
         }
     ]
 });

@@ -2,7 +2,7 @@
   <v-app>
     <Header></Header>
     <v-content>
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
       <notifications group="foo" position="top center" />
     </v-content>
     <Footer></Footer>
